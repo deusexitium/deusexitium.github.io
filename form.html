@@ -137,7 +137,7 @@
             document.getElementById('confirm-birthdate').innerText = birthdate;
             document.getElementById('confirm-message').innerText = document.getElementById('message').value.trim();
 
-            return false; // Prevent form from submitting immediately
+            return false;
         }
 
         // Phone number auto-formatter
@@ -158,16 +158,37 @@
 
         // Handles the final submission of the form
         document.getElementById('final-submit-btn').addEventListener('click', () => {
-            const formData = new FormData(document.getElementById('myForm'));
-            const dataString = Array.from(formData.entries())
-                                   .map(pair => `${encodeURIComponent(pair[0])}=${encodeURIComponent(pair[1])}`)
-                                   .join('&');
+            // Collect all form data to create the email body
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const state = document.getElementById('state').value.trim();
+            const zip = document.getElementById('zip').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const birthdate = document.getElementById('birthdate').value.trim();
+            const message = document.getElementById('message').value.trim();
 
-            // Redirect to mailto with the collected data
-            window.location.href = `mailto:carlton_cooper@daytonastate.edu?subject=Contact%20Form%20Submission&body=${dataString}`;
+            // Manually build the email body string
+            const emailBody = `Name: ${firstName} ${lastName}\n` +
+                              `Address: ${address}, ${city}, ${state}, ${zip}\n` +
+                              `Phone: ${phone}\n` +
+                              `Email: ${email}\n` +
+                              `Birth Date: ${birthdate}\n\n` +
+                              `Message:\n${message}`;
+
+            // Encode the email body for the URL
+            const encodedBody = encodeURIComponent(emailBody);
+
+            // Construct the full mailto URL
+            const mailtoUrl = `mailto:carlton_cooper@daytonastate.edu?subject=Contact%20Form%20Submission&body=${encodedBody}`;
+
+            // Open the user's default email client
+            window.location.href = mailtoUrl;
         });
 
-        // Handles the "Edit" button click
+        // Handles the Edit button click
         document.getElementById('edit-btn').addEventListener('click', () => {
             document.getElementById('contact-form').style.display = 'block';
             document.getElementById('confirmation-page').style.display = 'none';
