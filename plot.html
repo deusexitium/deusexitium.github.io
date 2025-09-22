@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Damped Cosine Plotter</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="forms.css" />
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    .container { max-width: 900px; margin: 0 auto; padding: 1rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.5rem; }
+    .card { border: 1px solid #e3e3e3; border-radius: 8px; padding: 1rem; background: #fff; }
+    label { font-weight: 600; display: block; margin-bottom: 0.25rem; }
+    input[type="number"] { width: 100%; padding: 0.5rem; }
+    .actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+    button { padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid #444; background: #222; color: #fff; cursor: pointer; }
+    button.secondary { background: #f7f7f7; color: #222; border-color: #ccc; }
+    #plot { width: 100%; height: 480px; }
+    .muted { color: #666; }
+    .error { color: #b00020; font-weight: 600; margin-top: 0.5rem; }
+    .results { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Assignment 4 - Plotting</h1>
+    <p>
+      Model: <strong>y(x) = A · e<sup>−b·x</sup> · cos(ω·x + φ) + C</strong>
+    </p>
+    <div class="card">
+      <form id="form">
+        <div class="grid">
+          <div>
+            <label for="A">A (amplitude)</label>
+            <input type="number" id="A" value="1" step="any" />
+          </div>
+          <div>
+            <label for="b">b (damping ≥ 0)</label>
+            <input type="number" id="b" value="0.2" step="any" />
+          </div>
+          <div>
+            <label for="omega">ω (frequency &gt; 0)</label>
+            <input type="number" id="omega" value="2" step="any" />
+          </div>
+          <div>
+            <label for="phi">φ (phase, rad)</label>
+            <input type="number" id="phi" value="0" step="any" />
+          </div>
+          <div>
+            <label for="C">C (offset)</label>
+            <input type="number" id="C" value="0" step="any" />
+          </div>
+          <div>
+            <label for="xmin">x min</label>
+            <input type="number" id="xmin" value="0" step="any" />
+          </div>
+          <div>
+            <label for="xmax">x max</label>
+            <input type="number" id="xmax" value="10" step="any" />
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit">Plot</button>
+          <button type="button" class="secondary" id="reset">Reset</button>
+        </div>
+        <div id="error" class="error" role="alert" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <div id="plot"></div>
+      <p class="muted">Drag to zoom. Double-click to reset.</p>
+    </div>
+
+    <div class="card">
+      <div class="results" id="roots"></div>
+    </div>
+  </div>
+
+  <script>
+    // Fixed sample count to keep things simple
+    const N = 1000;
+
+    function params() {
+      return {
+        A: parseFloat(document.getElementById('A').value),
+        b: parseFloat(document.getElementById('b').value),
+        omega: parseFloat(document.getElementById('omega').value),
+        phi: parseFloat(document.getElementById('phi').value),
+        C: parseFloat(document.getElementById('C').value),
+        xmin: parseFloat(document.getElementById('xmin').value),
+        xmax: parseFloat(document.getElementById('xmax').value),
+      };
+    }
+
+    function validate(p) {
+      const errs = [];
+      if (!isFinite(p.A)) errs.push('A must be a number.');
+      if (!isFinite(p.b) || p.b < 0) errs.push('b must be a number ≥ 0.');
+      if (!isFinite(p.omega) || p.omega <= 0) errs.push('ω must be a number > 0.');
+      if (!isFinite(p.phi)) errs.push('φ must be a number.');
+      if (!isFinite(p.C)) errs.push('C must be a number.');
+      if (!isFinite(p.xmin) || !isFinite(p.xmax)) errs.push('x min and x max must be numbers.');
+      if (p.xmax <= p.xmin) errs.push('x max must be greater than x min.');
+      return errs;
+    }
+
+    function y(x, p) {
+      return p.A * Math.exp(-p.b * x) * Math.cos(p.omega * x + p.phi) + p.C;
+    }
+
+    function sample(p) {
+      const xs = new Array(N), ys = new Array(N);
+      const dx = (p.xmax - p.xmin) / (N - 1);
+      for (let i = 0; i < N; i++) {
+        const x = p.xmin + i * dx;
+        xs[i] = x;
+        ys[i] = y(x, p);
+      }
+      return { xs, ys };
+    }
+
+    // midpoint of sign-change segment
+    function findRoots(xs, ys) {
+      const roots = [];
+      for (let i = 0; i < xs.length - 1; i++) {
+        const y1 = ys[i], y2 = ys[i + 1];
+        if (!isFinite(y1) || !isFinite(y2)) continue;
+        if (Math.abs(y1) < 1e-12) { roots.push(xs[i]); continue; }
+        if (y1 * y2 < 0) {
+          roots.push(0.5 * (xs[i] + xs[i + 1]));
+        }
+      }
+      return roots;
+    }
+
+    function plot(xs, ys, roots) {
+      const line = { x: xs, y: ys, mode: 'lines', name: 'y(x)', line: { color: '#0854a5', width: 2 } };
+      const axis0 = { x: [xs[0], xs[xs.length - 1]], y: [0, 0], mode: 'lines', name: 'y=0', line: { color: '#aaa', dash: 'dot' }, hoverinfo: 'skip' };
+      const points = roots.length ? { x: roots, y: roots.map(() => 0), mode: 'markers', name: 'Roots', marker: { color: '#d81b60', size: 8, symbol: 'x' } } : null;
+      const data = points ? [line, axis0, points] : [line, axis0];
+      const layout = { title: 'y = A·e^{−b·x}·cos(ω·x + φ) + C', xaxis: { title: 'x' }, yaxis: { title: 'y' }, margin: { l: 55, r: 15, t: 45, b: 45 } };
+      Plotly.newPlot('plot', data, layout, { responsive: true, displaylogo: false });
+    }
+
+    function showRoots(roots) {
+      const el = document.getElementById('roots');
+      if (!roots.length) { el.innerHTML = '<strong>Roots:</strong> none found in range.'; return; }
+      const list = roots.map((r, i) => `${i + 1}. x = ${r.toFixed(6)}`).join('<br/>');
+      el.innerHTML = `<strong>Roots (${roots.length}):</strong><br/>${list}`;
+    }
+
+    function computeAndPlot(e) {
+      if (e) e.preventDefault();
+      const err = document.getElementById('error');
+      err.textContent = '';
+      const p = params();
+      const errs = validate(p);
+      if (errs.length) { err.textContent = errs.join(' '); return; }
+      const { xs, ys } = sample(p);
+      const rts = findRoots(xs, ys);
+      plot(xs, ys, rts);
+      showRoots(rts);
+    }
+
+    function reset() {
+      document.getElementById('A').value = 1;
+      document.getElementById('b').value = 0.2;
+      document.getElementById('omega').value = 2;
+      document.getElementById('phi').value = 0;
+      document.getElementById('C').value = 0;
+      document.getElementById('xmin').value = 0;
+      document.getElementById('xmax').value = 10;
+      document.getElementById('error').textContent = '';
+      document.getElementById('roots').textContent = '';
+      Plotly.purge('plot');
+    }
+
+    document.getElementById('form').addEventListener('submit', computeAndPlot);
+    document.getElementById('reset').addEventListener('click', reset);
+
+
+    computeAndPlot();
+  </script>
+</body>
+</html>
