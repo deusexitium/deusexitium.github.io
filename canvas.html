@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spirograph Canvas</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .canvas-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .controls-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-width: 300px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .control-group input {
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .control-group input:valid {
+            border-color: #4CAF50;
+        }
+
+        .control-group input:invalid {
+            border-color: #f44336;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #startBtn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #startBtn:hover {
+            background-color: #45a049;
+        }
+
+        #clearBtn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        #clearBtn:hover {
+            background-color: #da190b;
+        }
+
+        .validation-message {
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        .success {
+             color: #4CAF50;
+         }
+
+         .status-container {
+             margin-top: 15px;
+             text-align: center;
+         }
+
+         .status-message {
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             gap: 8px;
+             padding: 10px;
+             background-color: #f8f9fa;
+             border-radius: 4px;
+             border: 1px solid #e9ecef;
+         }
+
+         .progress-bar {
+             width: 100%;
+             max-width: 200px;
+             height: 4px;
+             background-color: #e9ecef;
+             border-radius: 2px;
+             overflow: hidden;
+         }
+
+         .progress-fill {
+             height: 100%;
+             background-color: #2563eb;
+             border-radius: 2px;
+             transition: width 0.3s ease;
+             width: 0%;
+         }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Spirograph Canvas</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="assignments.html">Assignments</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="canvas-container">
+            <canvas id="spirographCanvas" width="800" height="600" style="border: 2px solid #333;">
+                Your browser does not support the HTML5 canvas element.
+            </canvas>
+
+            <div class="controls-container">
+                <h2>Spirograph Parameters</h2>
+
+                <div class="control-group">
+                    <label for="R">R (Outer Circle Radius):</label>
+                    <input type="number" id="R" min="50" max="400" value="150" step="1" required>
+                    <div class="validation-message">Range: 50-400</div>
+                </div>
+
+                <div class="control-group">
+                    <label for="r">r (Inner Circle Radius):</label>
+                    <input type="number" id="r" min="10" max="200" value="50" step="1" required>
+                    <div class="validation-message">Range: 10-200</div>
+                </div>
+
+                <div class="control-group">
+                    <label for="O">O (Offset Distance):</label>
+                    <input type="number" id="O" min="10" max="200" value="75" step="1" required>
+                    <div class="validation-message">Range: 10-200</div>
+                </div>
+
+                <div class="button-container">
+                     <button id="startBtn">Start Drawing</button>
+                     <button id="clearBtn">Clear Canvas</button>
+                 </div>
+
+                 <div class="status-container">
+                     <div id="animationStatus" class="status-message" style="display: none;">
+                         <span id="statusText">Drawing spirograph pattern...</span>
+                         <div class="progress-bar">
+                             <div id="progressFill" class="progress-fill"></div>
+                         </div>
+                     </div>
+                 </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+    </footer>
+
+    <script>
+        // Spirograph Math
+        class Spirograph {
+            constructor() {
+                // Spirograph parameters
+                this.R = 150; // Outer circle radius
+                this.r = 50;  // Inner circle radius
+                this.O = 75;  // Offset distance
+                this.t = 0;   // Time parameter
+
+                // Animation state
+                this.isDrawing = false;
+                this.animationId = null;
+
+                // Canvas and drawing context
+                this.canvas = null;
+                this.ctx = null;
+
+                // Drawing settings
+                this.scale = 1;
+                this.centerX = 0;
+                this.centerY = 0;
+
+                // Animation tracking
+                 this.prevX = null;
+                 this.prevY = null;
+                 this.startT = 0;
+                 this.lastFrameTime = 0;
+                 this.frameInterval = 1000 / 60; // Target 60 FPS
+
+                this.init();
+            }
+
+            init() {
+                this.setupCanvas();
+                this.setupEventListeners();
+                this.updateValidation();
+            }
+
+            // Mathematical equations for Spirograph
+            // x = (R+r)*cos(t) - (r+O)*cos(((R+r)/r)*t)
+            // y = (R+r)*sin(t) - (r+O)*sin(((R+r)/r)*t)
+            calculateCoordinates(t) {
+                const R_plus_r = this.R + this.r;
+                const ratio = R_plus_r / this.r;
+
+                const x = R_plus_r * Math.cos(t) - (this.r + this.O) * Math.cos(ratio * t);
+                const y = R_plus_r * Math.sin(t) - (this.r + this.O) * Math.sin(ratio * t);
+
+                return { x, y };
+            }
+
+            setupCanvas() {
+                this.canvas = document.getElementById('spirographCanvas');
+                this.ctx = this.canvas.getContext('2d');
+
+                // Set up scaling and centering
+                this.centerX = this.canvas.width / 2;
+                this.centerY = this.canvas.height / 2;
+
+                // Calculate scale to fit the pattern nicely
+                const maxDimension = Math.max(this.R + this.r + this.O, 200);
+                this.scale = Math.min(this.centerX, this.centerY) / maxDimension * 0.8;
+
+                this.clearCanvas();
+            }
+
+            clearCanvas() {
+                this.ctx.fillStyle = '#f9f9f9';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+                // Draw center point for reference
+                this.ctx.strokeStyle = '#ddd';
+                this.ctx.lineWidth = 1;
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.centerX, 0);
+                this.ctx.lineTo(this.centerX, this.canvas.height);
+                this.ctx.moveTo(0, this.centerY);
+                this.ctx.lineTo(this.canvas.width, this.centerY);
+                this.ctx.stroke();
+            }
+
+            // Input validation for parameters
+            validateParameters() {
+                const R = parseFloat(document.getElementById('R').value);
+                const r = parseFloat(document.getElementById('r').value);
+                const O = parseFloat(document.getElementById('O').value);
+
+                if (isNaN(R) || R < 50 || R > 400) {
+                    return { valid: false, message: 'R must be between 50 and 400' };
+                }
+
+                if (isNaN(r) || r < 10 || r > 200) {
+                    return { valid: false, message: 'r must be between 10 and 200' };
+                }
+
+                if (isNaN(O) || O < 10 || O > 200) {
+                    return { valid: false, message: 'O must be between 10 and 200' };
+                }
+
+                // Additional validation: r should be less than R for proper spirograph
+                if (r >= R) {
+                    return { valid: false, message: 'r must be less than R for proper spirograph pattern' };
+                }
+
+                return { valid: true };
+            }
+
+            updateValidation() {
+                const validation = this.validateParameters();
+
+                // Update visual feedback for all inputs
+                ['R', 'r', 'O'].forEach(param => {
+                    const input = document.getElementById(param);
+                    const validationMsg = input.parentElement.querySelector('.validation-message');
+
+                    if (validation.valid) {
+                        input.classList.remove('error');
+                        input.classList.add('success');
+                        validationMsg.textContent = `Range: ${input.min}-${input.max}`;
+                        validationMsg.className = 'validation-message success';
+                    } else {
+                        input.classList.remove('success');
+                        input.classList.add('error');
+                        validationMsg.textContent = validation.message;
+                        validationMsg.className = 'validation-message error';
+                    }
+                });
+            }
+
+            updateParameters() {
+                const validation = this.validateParameters();
+                if (validation.valid) {
+                    this.R = parseFloat(document.getElementById('R').value);
+                    this.r = parseFloat(document.getElementById('r').value);
+                    this.O = parseFloat(document.getElementById('O').value);
+
+                    // Recalculate scale and center
+                    this.setupCanvas();
+                }
+            }
+
+            // Animation setup and control
+             startDrawing() {
+                 if (this.isDrawing) return;
+
+                 const validation = this.validateParameters();
+                 if (!validation.valid) {
+                     alert('Please fix parameter errors before starting: ' + validation.message);
+                     return;
+                 }
+
+                 this.updateParameters();
+                 this.isDrawing = true;
+                 this.t = 0;
+                 this.prevX = null;
+                 this.prevY = null;
+                 this.lastFrameTime = 0;
+
+                 this.showAnimationStatus();
+                 this.animate();
+             }
+
+            stopDrawing() {
+                 this.isDrawing = false;
+                 if (this.animationId) {
+                     cancelAnimationFrame(this.animationId);
+                     this.animationId = null;
+                 }
+                 this.hideAnimationStatus();
+             }
+
+            animate(currentTime) {
+                if (!this.isDrawing) return;
+
+                // Frame rate control for consistent animation speed
+                if (currentTime - this.lastFrameTime < this.frameInterval) {
+                    this.animationId = requestAnimationFrame(() => this.animate(currentTime));
+                    return;
+                }
+                this.lastFrameTime = currentTime;
+
+                // Calculate current point coordinates
+                const coords = this.calculateCoordinates(this.t);
+                const currentX = this.centerX + coords.x * this.scale;
+                const currentY = this.centerY + coords.y * this.scale;
+
+                // Draw line from previous point to current point
+                if (this.prevX !== null && this.prevY !== null) {
+                    this.ctx.strokeStyle = '#2563eb';
+                    this.ctx.lineWidth = 2;
+                    this.ctx.lineCap = 'round';
+                    this.ctx.lineJoin = 'round';
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.prevX, this.prevY);
+                    this.ctx.lineTo(currentX, currentY);
+                    this.ctx.stroke();
+                } else {
+                    // First point - just store the position
+                    this.startT = this.t;
+                }
+
+                // Store current position for next iteration
+                this.prevX = currentX;
+                this.prevY = currentY;
+
+                // Check if pattern is complete (full rotation)
+                // A complete pattern is typically when t reaches 2π * (r / gcd(R+r, r))
+                const R_plus_r = this.R + this.r;
+                const gcd = this.calculateGCD(R_plus_r, this.r);
+                const completeRotation = (2 * Math.PI * this.r) / gcd;
+
+                // Increment time parameter with larger step for faster animation
+                this.t += 0.08;
+
+                // Update progress bar
+                const progress = Math.min(100, ((this.t - this.startT) / completeRotation) * 100);
+                this.updateProgress(progress);
+
+                // Check if animation should stop (pattern complete)
+                if (this.t - this.startT >= completeRotation) {
+                    this.stopDrawing();
+                    document.getElementById('startBtn').textContent = 'Start Drawing';
+                    console.log('Spirograph pattern completed!');
+                    return;
+                }
+
+                // Continue animation if still drawing
+                if (this.isDrawing) {
+                    this.animationId = requestAnimationFrame((timestamp) => this.animate(timestamp));
+                }
+            }
+
+            // Helper function to calculate Greatest Common Divisor
+            calculateGCD(a, b) {
+                return b === 0 ? a : this.calculateGCD(b, a % b);
+            }
+
+            // Animation status and progress methods
+            showAnimationStatus() {
+                const statusElement = document.getElementById('animationStatus');
+                const statusText = document.getElementById('statusText');
+                if (statusElement && statusText) {
+                    statusText.textContent = 'Drawing spirograph pattern...';
+                    statusElement.style.display = 'flex';
+                }
+            }
+
+            hideAnimationStatus() {
+                const statusElement = document.getElementById('animationStatus');
+                if (statusElement) {
+                    statusElement.style.display = 'none';
+                }
+            }
+
+            updateProgress(percentage) {
+                const progressFill = document.getElementById('progressFill');
+                if (progressFill) {
+                    progressFill.style.width = Math.min(100, Math.max(0, percentage)) + '%';
+                }
+            }
+
+            setupEventListeners() {
+                // Button event listeners
+                document.getElementById('startBtn').addEventListener('click', () => {
+                    if (this.isDrawing) {
+                        this.stopDrawing();
+                        document.getElementById('startBtn').textContent = 'Start Drawing';
+                    } else {
+                        this.startDrawing();
+                        document.getElementById('startBtn').textContent = 'Stop Drawing';
+                    }
+                });
+
+                document.getElementById('clearBtn').addEventListener('click', () => {
+                    this.stopDrawing();
+                    document.getElementById('startBtn').textContent = 'Start Drawing';
+                    this.clearCanvas();
+                    this.hideAnimationStatus();
+                });
+
+                // Real-time input validation
+                ['R', 'r', 'O'].forEach(param => {
+                    document.getElementById(param).addEventListener('input', () => {
+                        this.updateValidation();
+                    });
+
+                    document.getElementById(param).addEventListener('change', () => {
+                        this.updateParameters();
+                    });
+                });
+            }
+        }
+
+        // Initialize Spirograph when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const spirograph = new Spirograph();
+            console.log('Spirograph loaded and ready.');
+        });
+    </script>
+</body>
+</html>
