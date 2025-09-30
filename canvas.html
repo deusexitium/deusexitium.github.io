@@ -229,11 +229,14 @@
             // x = (R+r)*cos(t) - (r+O)*cos(((R+r)/r)*t)
             // y = (R+r)*sin(t) - (r+O)*sin(((R+r)/r)*t)
             calculateCoordinates(t) {
+                console.log('calculateCoordinates called with t:', t, 'R:', this.R, 'r:', this.r, 'O:', this.O);
                 const R_plus_r = this.R + this.r;
                 const ratio = R_plus_r / this.r;
+                console.log('Ratio:', ratio);
 
                 const x = R_plus_r * Math.cos(t) - (this.r + this.O) * Math.cos(ratio * t);
                 const y = R_plus_r * Math.sin(t) - (this.r + this.O) * Math.sin(ratio * t);
+                console.log('Raw coords:', { x, y });
 
                 return { x, y };
             }
@@ -330,15 +333,21 @@
 
             // Animation setup and control
              startDrawing() {
-                 if (this.isDrawing) return;
+                 console.log('startDrawing called');
+                 if (this.isDrawing) {
+                     console.log('Already drawing, returning');
+                     return;
+                 }
 
                  const validation = this.validateParameters();
+                 console.log('Validation result:', validation);
                  if (!validation.valid) {
                      alert('Please fix parameter errors before starting: ' + validation.message);
                      return;
                  }
 
                  this.updateParameters();
+                 console.log('Parameters updated:', { R: this.R, r: this.r, O: this.O });
                  this.isDrawing = true;
                  this.t = 0;
                  this.prevX = null;
@@ -346,35 +355,54 @@
                  this.lastFrameTime = 0;
 
                  this.showAnimationStatus();
-                 this.animate();
+                 console.log('Starting animate with initial t=0');
+                 this.animate(performance.now());
              }
 
             stopDrawing() {
+                 console.log('stopDrawing called');
                  this.isDrawing = false;
                  if (this.animationId) {
                      cancelAnimationFrame(this.animationId);
                      this.animationId = null;
+                     console.log('Animation frame cancelled');
                  }
                  this.hideAnimationStatus();
              }
 
             animate(currentTime) {
-                if (!this.isDrawing) return;
+                console.log('Animate called:', { currentTime, isDrawing: this.isDrawing, t: this.t, lastFrameTime: this.lastFrameTime });
+
+                if (!this.isDrawing) {
+                    console.log('Animation stopped early');
+                    return;
+                }
 
                 // Frame rate control for consistent animation speed
-                if (currentTime - this.lastFrameTime < this.frameInterval) {
-                    this.animationId = requestAnimationFrame(() => this.animate(currentTime));
+                const timeDiff = currentTime - this.lastFrameTime;
+                console.log('Time diff:', timeDiff, 'frameInterval:', this.frameInterval);
+                if (timeDiff < this.frameInterval) {
+                    console.log('Skipping frame due to rate limit');
+                    this.animationId = requestAnimationFrame((timestamp) => this.animate(timestamp));
                     return;
                 }
                 this.lastFrameTime = currentTime;
 
                 // Calculate current point coordinates
                 const coords = this.calculateCoordinates(this.t);
+                console.log('Coords calculated:', coords);
+                if (isNaN(coords.x) || isNaN(coords.y)) {
+                    console.log('Invalid coordinates detected, stopping animation');
+                    this.stopDrawing();
+                    return;
+                }
                 const currentX = this.centerX + coords.x * this.scale;
                 const currentY = this.centerY + coords.y * this.scale;
+                console.log('Scaled position:', { currentX, currentY });
 
                 // Draw line from previous point to current point
                 if (this.prevX !== null && this.prevY !== null) {
+                    console.log('Drawing line from', { prevX: this.prevX, prevY: this.prevY }, 'to', { currentX, currentY });
                     this.ctx.strokeStyle = '#2563eb';
                     this.ctx.lineWidth = 2;
                     this.ctx.lineCap = 'round';
@@ -385,6 +413,7 @@
                     this.ctx.stroke();
                 } else {
                     // First point - just store the position
+                    console.log('First point, setting startT');
                     this.startT = this.t;
                 }
 
@@ -396,17 +425,22 @@
                 // A complete pattern is typically when t reaches 2π * (r / gcd(R+r, r))
                 const R_plus_r = this.R + this.r;
                 const gcd = this.calculateGCD(R_plus_r, this.r);
+                console.log('GCD calculated:', gcd, 'R_plus_r:', R_plus_r);
                 const completeRotation = (2 * Math.PI * this.r) / gcd;
+                console.log('Complete rotation value:', completeRotation, 'current progress t - startT:', this.t - this.startT);
 
                 // Increment time parameter with larger step for faster animation
                 this.t += 0.08;
+                console.log('t incremented to:', this.t);
 
                 // Update progress bar
                 const progress = Math.min(100, ((this.t - this.startT) / completeRotation) * 100);
                 this.updateProgress(progress);
+                console.log('Progress updated to:', progress + '%');
 
                 // Check if animation should stop (pattern complete)
                 if (this.t - this.startT >= completeRotation) {
+                    console.log('Pattern complete, stopping');
                     this.stopDrawing();
                     document.getElementById('startBtn').textContent = 'Start Drawing';
                     console.log('Spirograph pattern completed!');
@@ -415,7 +449,10 @@
 
                 // Continue animation if still drawing
                 if (this.isDrawing) {
+                    console.log('Requesting next frame');
                     this.animationId = requestAnimationFrame((timestamp) => this.animate(timestamp));
+                } else {
+                    console.log('Not drawing, no next frame requested');
                 }
             }
 
