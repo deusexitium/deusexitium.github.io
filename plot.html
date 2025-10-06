@@ -4,30 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simple Damped Cosine Plotter</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="forms.css" />
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-  <style>
-    .container { max-width: 900px; margin: 0 auto; padding: 1rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.5rem; }
-    .card { border: 1px solid #e3e3e3; border-radius: 8px; padding: 1rem; background: #fff; }
-    label { font-weight: 600; display: block; margin-bottom: 0.25rem; }
-    input[type="number"] { width: 100%; padding: 0.5rem; }
-    .actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
-    button { padding: 0.5rem 0.8rem; border-radius: 6px; border: 1px solid #444; background: #222; color: #fff; cursor: pointer; }
-    button.secondary { background: #f7f7f7; color: #222; border-color: #ccc; }
-    #plot { width: 100%; height: 480px; }
-    .muted { color: #666; }
-    .error { color: #b00020; font-weight: 600; margin-top: 0.5rem; }
-    .results { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.95rem; }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <h1>Assignment 4 - Plotting</h1>
-    <p>
-      Model: <strong>y(x) = A · e<sup>−b·x</sup> · cos(ω·x + φ) + C</strong>
-    </p>
+    <div class="header">
+      <h1>Assignment 4 - Plotting</h1>
+      <p>
+        Model: <strong>y(x) = A · e<sup>−b·x</sup> · cos(ω·x + φ) + C</strong>
+      </p>
+    </div>
+
+    <div class="content">
+      <div class="model-description">
+        <strong>Interactive Mathematical Plotter</strong><br>
+        Adjust parameters below to visualize different damped cosine functions
+      </div>
     <div class="card">
       <form id="form">
         <div class="grid">
@@ -73,8 +66,9 @@
       <p class="muted">Drag to zoom. Double-click to reset.</p>
     </div>
 
-    <div class="card">
-      <div class="results" id="roots"></div>
+      <div class="card">
+        <div class="results" id="roots"></div>
+      </div>
     </div>
   </div>
 

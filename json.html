@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Languages</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Programming Languages</h1>
+            <p></p>
+        </div>
+
+        <div id="error-message" class="error"></div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="total-languages">0</div>
+                <div class="stat-label">Total Languages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="beginner-count">0</div>
+                <div class="stat-label">Beginner Friendly</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="oldest-year">0</div>
+                <div class="stat-label">Oldest Language</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="newest-year">0</div>
+                <div class="stat-label">Newest Language</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div id="loading" class="loading">Loading programming languages data...</div>
+            <table id="languages-table" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Year Created</th>
+                        <th>Creator</th>
+                        <th>Paradigm</th>
+                        <th>Difficulty</th>
+                        <th>Popular Uses</th>
+                        <th>Fun Fact</th>
+                    </tr>
+                </thead>
+                <tbody id="languages-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Function to show error messages
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Function to format difficulty level with styling
+        function formatDifficulty(difficulty) {
+            const difficultyClass = `difficulty-${difficulty.toLowerCase()}`;
+            return `<span class="${difficultyClass}">${difficulty}</span>`;
+        }
+
+        // Function to format popular uses as a list
+        function formatUses(uses) {
+            return `<ul class="uses-list">${uses.map(use => `<li>${use}</li>`).join('')}</ul>`;
+        }
+
+        // Function to create table row for a language
+        function createLanguageRow(language) {
+            return `
+                <tr>
+                    <td><strong>${language.name}</strong></td>
+                    <td>${language.year_created}</td>
+                    <td>${language.creator}</td>
+                    <td>${language.paradigm}</td>
+                    <td>${formatDifficulty(language.difficulty)}</td>
+                    <td>${formatUses(language.popular_uses)}</td>
+                    <td>
+                        ${language.fun_fact}
+                    </td>
+                </tr>
+            `;
+        }
+
+        // Function to update statistics
+        function updateStats(languages) {
+            document.getElementById('total-languages').textContent = languages.length;
+
+            const beginnerCount = languages.filter(lang => lang.difficulty === 'Beginner').length;
+            document.getElementById('beginner-count').textContent = beginnerCount;
+
+            const years = languages.map(lang => lang.year_created).sort((a, b) => a - b);
+            document.getElementById('oldest-year').textContent = years[0];
+            document.getElementById('newest-year').textContent = years[years.length - 1];
+        }
+
+        // Function to load and display languages
+        async function loadLanguages() {
+            try {
+                const response = await fetch('programming_languages.json');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (!data.programming_languages || !Array.isArray(data.programming_languages)) {
+                    throw new Error('Invalid JSON structure: expected array of programming languages');
+                }
+
+                const languages = data.programming_languages;
+
+                // Update statistics
+                updateStats(languages);
+
+                // Hide loading message and show table
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('languages-table').style.display = 'table';
+
+                // Populate table
+                const tbody = document.getElementById('languages-body');
+                tbody.innerHTML = languages.map(createLanguageRow).join('');
+
+            } catch (error) {
+                console.error('Error loading programming languages:', error);
+                showError(`Failed to load programming languages data: ${error.message}`);
+            }
+        }
+
+        // Load languages when page loads
+        document.addEventListener('DOMContentLoaded', loadLanguages);
+    </script>
+</body>
+</html>

@@ -5,186 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spirograph</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        .canvas-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .controls-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            min-width: 300px;
-        }
-
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .control-group label {
-            font-weight: bold;
-            color: #333;
-        }
-
-        .control-group input {
-            padding: 8px;
-            border: 2px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .control-group input:valid {
-            border-color: #4CAF50;
-        }
-
-        .control-group input:invalid {
-            border-color: #f44336;
-        }
-
-        .button-container {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #startBtn {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        #startBtn:hover {
-            background-color: #45a049;
-        }
-
-        #clearBtn {
-            background-color: #f44336;
-            color: white;
-        }
-
-        #clearBtn:hover {
-            background-color: #da190b;
-        }
-
-        .validation-message {
-            font-size: 12px;
-            color: #666;
-            margin-top: 2px;
-        }
-
-        .error {
-            color: #f44336;
-        }
-
-        .success {
-             color: #4CAF50;
-         }
-
-         .status-container {
-             margin-top: 15px;
-             text-align: center;
-         }
-
-         .status-message {
-             display: flex;
-             flex-direction: column;
-             align-items: center;
-             gap: 8px;
-             padding: 10px;
-             background-color: #f8f9fa;
-             border-radius: 4px;
-             border: 1px solid #e9ecef;
-         }
-
-         .progress-bar {
-             width: 100%;
-             max-width: 200px;
-             height: 4px;
-             background-color: #e9ecef;
-             border-radius: 2px;
-             overflow: hidden;
-         }
-
-         .progress-fill {
-             height: 100%;
-             background-color: #2563eb;
-             border-radius: 2px;
-             transition: width 0.3s ease;
-             width: 0%;
-         }
-    </style>
 </head>
 <body>
-    <header>
-        <h1>Spirograph</h1>
+    <div class="container">
+        <div class="header">
+            <h1>Spirograph</h1>
+        </div>
+
         <nav>
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
             <a href="assignments.html">Assignments</a>
         </nav>
-    </header>
 
-    <main>
-        <div class="canvas-container">
-            <canvas id="spirographCanvas" width="800" height="600" style="border: 2px solid #333;">
-                Your browser does not support the HTML5 canvas element.
-            </canvas>
+        <main>
+            <div class="canvas-container">
+                <canvas id="spirographCanvas" width="800" height="600">
+                    Your browser does not support the HTML5 canvas element.
+                </canvas>
 
-            <div class="controls-container">
-                <h2>Spirograph Parameters</h2>
+                <div class="controls-container">
+                    <h2>Spirograph Parameters</h2>
 
-                <div class="control-group">
-                    <label for="R">R (Outer Circle Radius):</label>
-                    <input type="number" id="R" min="50" max="400" value="150" step="1" required>
-                    <div class="validation-message">Range: 50-400</div>
+                    <div class="control-group">
+                        <label for="R">R (Outer Circle Radius):</label>
+                        <input type="number" id="R" min="50" max="400" value="150" step="1" required>
+                        <div class="validation-message">Range: 50-400</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="r">r (Inner Circle Radius):</label>
+                        <input type="number" id="r" min="10" max="200" value="50" step="1" required>
+                        <div class="validation-message">Range: 10-200</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="O">O (Offset Distance):</label>
+                        <input type="number" id="O" min="10" max="200" value="75" step="1" required>
+                        <div class="validation-message">Range: 10-200</div>
+                    </div>
+
+                    <div class="button-container">
+                        <button id="startBtn">Start Drawing</button>
+                        <button id="clearBtn">Clear Canvas</button>
+                    </div>
+
+                    <div class="status-container">
+                        <div id="animationStatus" class="status-message" style="display: none;">
+                            <span id="statusText">Drawing spirograph pattern...</span>
+                            <div class="progress-bar">
+                                <div id="progressFill" class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="control-group">
-                    <label for="r">r (Inner Circle Radius):</label>
-                    <input type="number" id="r" min="10" max="200" value="50" step="1" required>
-                    <div class="validation-message">Range: 10-200</div>
-                </div>
-
-                <div class="control-group">
-                    <label for="O">O (Offset Distance):</label>
-                    <input type="number" id="O" min="10" max="200" value="75" step="1" required>
-                    <div class="validation-message">Range: 10-200</div>
-                </div>
-
-                <div class="button-container">
-                     <button id="startBtn">Start Drawing</button>
-                     <button id="clearBtn">Clear Canvas</button>
-                 </div>
-
-                 <div class="status-container">
-                     <div id="animationStatus" class="status-message" style="display: none;">
-                         <span id="statusText">Drawing spirograph pattern...</span>
-                         <div class="progress-bar">
-                             <div id="progressFill" class="progress-fill"></div>
-                         </div>
-                     </div>
-                 </div>
             </div>
-        </div>
-    </main>
-
-    <footer>
-    </footer>
+        </main>
+    </div>
 
     <script>
         // Spirograph Math

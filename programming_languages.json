@@ -1,0 +1,124 @@
+{
+  "programming_languages": [
+    {
+      "name": "Python",
+      "year_created": 1991,
+      "creator": "Guido van Rossum",
+      "paradigm": "Multi-paradigm (object-oriented, imperative, functional, procedural)",
+      "difficulty": "Beginner",
+      "popular_uses": [
+        "Web development",
+        "Data science and machine learning",
+        "Automation and scripting",
+        "Scientific computing",
+        "Backend development"
+      ],
+      "fun_fact": "Python's name comes from Monty Python's Flying Circus, not the snake, and its philosophy emphasizes code readability with the Zen of Python poem."
+    },
+    {
+      "name": "JavaScript",
+      "year_created": 1995,
+      "creator": "Brendan Eich",
+      "paradigm": "Multi-paradigm (object-oriented, functional, imperative)",
+      "difficulty": "Beginner",
+      "popular_uses": [
+        "Web development (frontend)",
+        "Server-side development (Node.js)",
+        "Mobile app development",
+        "Desktop applications",
+        "Game development"
+      ],
+      "fun_fact": "JavaScript was created in just 10 days and was originally called LiveScript before being renamed for marketing reasons."
+    },
+    {
+      "name": "Java",
+      "year_created": 1995,
+      "creator": "James Gosling",
+      "paradigm": "Object-oriented, imperative",
+      "difficulty": "Intermediate",
+      "popular_uses": [
+        "Enterprise applications",
+        "Android mobile apps",
+        "Web applications",
+        "Big data processing",
+        "Financial services software"
+      ],
+      "fun_fact": "Java was originally designed for interactive television, but became popular for web applications instead."
+    },
+    {
+      "name": "C++",
+      "year_created": 1985,
+      "creator": "Bjarne Stroustrup",
+      "paradigm": "Multi-paradigm (object-oriented, procedural, generic)",
+      "difficulty": "Advanced",
+      "popular_uses": [
+        "System programming",
+        "Game development",
+        "High-performance applications",
+        "Embedded systems",
+        "Real-time systems"
+      ],
+      "fun_fact": "C++ was created as an extension of C with classes, which is where the '++' in the name comes from."
+    },
+    {
+      "name": "Rust",
+      "year_created": 2010,
+      "creator": "Graydon Hoare",
+      "paradigm": "Multi-paradigm (functional, imperative, generic)",
+      "difficulty": "Advanced",
+      "popular_uses": [
+        "System programming",
+        "WebAssembly applications",
+        "Command-line tools",
+        "Embedded systems",
+        "High-performance services"
+      ],
+      "fun_fact": "Rust provides memory safety without garbage collection, making it unique among systems programming languages."
+    },
+    {
+      "name": "Go",
+      "year_created": 2009,
+      "creator": "Robert Griesemer, Rob Pike, and Ken Thompson",
+      "paradigm": "Multi-paradigm (imperative, procedural, concurrent)",
+      "difficulty": "Intermediate",
+      "popular_uses": [
+        "Web services and APIs",
+        "Cloud computing",
+        "DevOps tools",
+        "Command-line applications",
+        "Microservices"
+      ],
+      "fun_fact": "Go was designed at Google to solve software engineering problems at scale and features a mascot named 'Gopher'."
+    },
+    {
+      "name": "Swift",
+      "year_created": 2014,
+      "creator": "Chris Lattner",
+      "paradigm": "Multi-paradigm (object-oriented, functional, imperative)",
+      "difficulty": "Intermediate",
+      "popular_uses": [
+        "iOS and macOS app development",
+        "tvOS and watchOS apps",
+        "Server-side development",
+        "Machine learning",
+        "System programming"
+      ],
+      "fun_fact": "Swift was designed to be safer than Objective-C and includes features like optionals to prevent common programming errors."
+    },
+    {
+      "name": "SQL",
+      "year_created": 1974,
+      "creator": "Donald D. Chamberlin and Raymond F. Boyce",
+      "paradigm": "Declarative",
+      "difficulty": "Beginner",
+      "popular_uses": [
+        "Database queries and management",
+        "Data analysis",
+        "Business intelligence",
+        "Reporting",
+        "Data warehousing"
+      ],
+      "fun_fact": "SQL stands for Structured Query Language and is used by nearly all relational database management systems."
+    }
+  ]
+}
