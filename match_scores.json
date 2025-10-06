@@ -1,0 +1,1034 @@
+[
+    {
+        "games": [
+            {
+                "complete": false,
+                "id": 271701,
+                "position": 1,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222081,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271702,
+                "position": 2,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222081,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271703,
+                "position": 3,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222081,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271704,
+                "position": 4,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222081,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271705,
+                "position": 5,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222081,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            }
+        ],
+        "slug": "berlin-international-gaming-vs-cgn-esports-2025-08-14",
+        "tournament": {
+            "id": 17327,
+            "name": "Playoffs",
+            "type": "online",
+            "country": "DE",
+            "slug": "league-of-legends-prime-league-pro-division-summer-2025-playoffs",
+            "begin_at": "2025-08-12T16:00:00Z",
+            "detailed_stats": true,
+            "end_at": "2025-08-24T16:52:00Z",
+            "winner_id": 125905,
+            "winner_type": "Team",
+            "serie_id": 9581,
+            "modified_at": "2025-08-25T07:47:22Z",
+            "league_id": 4302,
+            "has_bracket": true,
+            "prizepool": "20000 Euro",
+            "region": "WEU",
+            "tier": "c",
+            "live_supported": false
+        },
+        "live": {
+            "supported": false,
+            "url": null,
+            "opens_at": null
+        },
+        "winner_id": null,
+        "draw": false,
+        "videogame_version": null,
+        "end_at": null,
+        "detailed_stats": true,
+        "number_of_games": 5,
+        "serie": {
+            "id": 9581,
+            "name": "Season Finals",
+            "year": 2025,
+            "slug": "league-of-legends-prime-league-pro-division-season-finals-2025",
+            "begin_at": "2025-08-12T16:00:00Z",
+            "end_at": "2025-08-24T16:52:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "modified_at": "2025-08-25T07:47:22Z",
+            "league_id": 4302,
+            "season": null,
+            "full_name": "Season Finals 2025"
+        },
+        "league_id": 4302,
+        "match_type": "best_of",
+        "status": "canceled",
+        "game_advantage": null,
+        "tournament_id": 17327,
+        "scheduled_at": "2025-08-14T16:00:00Z",
+        "opponents": [
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 125905,
+                    "name": "Berlin International Gaming",
+                    "location": "DE",
+                    "slug": "big-league-of-legends",
+                    "modified_at": "2025-09-29T17:55:39Z",
+                    "acronym": "BIG",
+                    "image_url": "https://cdn.pandascore.co/images/team/image/125905/berlin_international_gaminglogo_square.png"
+                }
+            },
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 136848,
+                    "name": "CGN Esports",
+                    "location": "DE",
+                    "slug": "cgn-esports-league-of-legends",
+                    "modified_at": "2025-08-09T10:32:04Z",
+                    "acronym": "CGN",
+                    "image_url": "https://cdn.pandascore.co/images/team/image/136848/cgn_esportslogo_square.png"
+                }
+            }
+        ],
+        "id": 1222081,
+        "name": "Upper bracket final: BIG vs CGN",
+        "videogame_title": null,
+        "original_scheduled_at": "2025-08-14T16:00:00Z",
+        "begin_at": null,
+        "forfeit": false,
+        "modified_at": "2025-08-11T00:21:13Z",
+        "streams_list": [
+            {
+                "main": false,
+                "language": "de",
+                "embed_url": null,
+                "official": false,
+                "raw_url": "https://www.youtube.com/@PrimeLeague/streams"
+            },
+            {
+                "main": true,
+                "language": "de",
+                "embed_url": "https://player.twitch.tv/?channel=primeleague",
+                "official": true,
+                "raw_url": "https://www.twitch.tv/primeleague"
+            }
+        ],
+        "rescheduled": false,
+        "videogame": {
+            "id": 1,
+            "name": "LoL",
+            "slug": "league-of-legends"
+        },
+        "winner_type": "Team",
+        "serie_id": 9581,
+        "league": {
+            "id": 4302,
+            "name": "Prime League 1st Division",
+            "url": "https://www.primeleague.gg/de/start",
+            "slug": "league-of-legends-prime-league-pro-division",
+            "modified_at": "2023-12-26T22:31:16Z",
+            "image_url": "https://cdn.pandascore.co/images/league/image/4302/440px-prime_league_lightmode-png"
+        },
+        "winner": null,
+        "results": [
+            {
+                "score": 0,
+                "team_id": 125905
+            },
+            {
+                "score": 0,
+                "team_id": 136848
+            }
+        ]
+    },
+    {
+        "games": [
+            {
+                "complete": false,
+                "id": 271691,
+                "position": 1,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222078,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271692,
+                "position": 2,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222078,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271693,
+                "position": 3,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222078,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271694,
+                "position": 4,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222078,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271695,
+                "position": 5,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222078,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            }
+        ],
+        "slug": "e-wie-einfach-e-sports-vs-rossmann-centaurs-2025-08-13",
+        "tournament": {
+            "id": 17327,
+            "name": "Playoffs",
+            "type": "online",
+            "country": "DE",
+            "slug": "league-of-legends-prime-league-pro-division-summer-2025-playoffs",
+            "begin_at": "2025-08-12T16:00:00Z",
+            "detailed_stats": true,
+            "end_at": "2025-08-24T16:52:00Z",
+            "winner_id": 125905,
+            "winner_type": "Team",
+            "serie_id": 9581,
+            "modified_at": "2025-08-25T07:47:22Z",
+            "league_id": 4302,
+            "has_bracket": true,
+            "prizepool": "20000 Euro",
+            "region": "WEU",
+            "tier": "c",
+            "live_supported": false
+        },
+        "live": {
+            "supported": false,
+            "url": null,
+            "opens_at": null
+        },
+        "winner_id": null,
+        "draw": false,
+        "videogame_version": null,
+        "end_at": null,
+        "detailed_stats": true,
+        "number_of_games": 5,
+        "serie": {
+            "id": 9581,
+            "name": "Season Finals",
+            "year": 2025,
+            "slug": "league-of-legends-prime-league-pro-division-season-finals-2025",
+            "begin_at": "2025-08-12T16:00:00Z",
+            "end_at": "2025-08-24T16:52:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "modified_at": "2025-08-25T07:47:22Z",
+            "league_id": 4302,
+            "season": null,
+            "full_name": "Season Finals 2025"
+        },
+        "league_id": 4302,
+        "match_type": "best_of",
+        "status": "canceled",
+        "game_advantage": null,
+        "tournament_id": 17327,
+        "scheduled_at": "2025-08-13T16:00:00Z",
+        "opponents": [
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 128333,
+                    "name": "E WIE EINFACH E-SPORTS",
+                    "location": "DE",
+                    "slug": "e-wie-einfach-e-sports",
+                    "modified_at": "2025-08-13T15:22:14Z",
+                    "acronym": "EWI",
+                    "image_url": "https://cdn.pandascore.co/images/team/image/128333/e_wie_einfach_e_sport_slogo_square.png"
+                }
+            },
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 135653,
+                    "name": "ROSSMANN Centaurs",
+                    "location": "DE",
+                    "slug": "rossmann-centaurs",
+                    "modified_at": "2025-09-21T11:47:39Z",
+                    "acronym": "ROSS",
+                    "image_url": "https://cdn.pandascore.co/images/team/image/135653/rossmann_centaurslogo_square.png"
+                }
+            }
+        ],
+        "id": 1222078,
+        "name": "Lower bracket quarterfinal 2: EWI vs ROSS",
+        "videogame_title": null,
+        "original_scheduled_at": "2025-08-13T16:00:00Z",
+        "begin_at": null,
+        "forfeit": false,
+        "modified_at": "2025-08-12T18:44:22Z",
+        "streams_list": [
+            {
+                "main": true,
+                "language": "de",
+                "embed_url": "https://player.twitch.tv/?channel=primeleague",
+                "official": true,
+                "raw_url": "https://www.twitch.tv/primeleague"
+            },
+            {
+                "main": false,
+                "language": "de",
+                "embed_url": null,
+                "official": false,
+                "raw_url": "https://www.youtube.com/@PrimeLeague/streams"
+            }
+        ],
+        "rescheduled": false,
+        "videogame": {
+            "id": 1,
+            "name": "LoL",
+            "slug": "league-of-legends"
+        },
+        "winner_type": "Team",
+        "serie_id": 9581,
+        "league": {
+            "id": 4302,
+            "name": "Prime League 1st Division",
+            "url": "https://www.primeleague.gg/de/start",
+            "slug": "league-of-legends-prime-league-pro-division",
+            "modified_at": "2023-12-26T22:31:16Z",
+            "image_url": "https://cdn.pandascore.co/images/league/image/4302/440px-prime_league_lightmode-png"
+        },
+        "winner": null,
+        "results": [
+            {
+                "score": 0,
+                "team_id": 128333
+            },
+            {
+                "score": 0,
+                "team_id": 135653
+            }
+        ]
+    },
+    {
+        "games": [
+            {
+                "complete": false,
+                "id": 271686,
+                "position": 1,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222076,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271687,
+                "position": 2,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222076,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271688,
+                "position": 3,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222076,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271689,
+                "position": 4,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222076,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271690,
+                "position": 5,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1222076,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            }
+        ],
+        "slug": "team-orange-gaming-vs-kaufland-hangry-knights-2025-08-12",
+        "tournament": {
+            "id": 17327,
+            "name": "Playoffs",
+            "type": "online",
+            "country": "DE",
+            "slug": "league-of-legends-prime-league-pro-division-summer-2025-playoffs",
+            "begin_at": "2025-08-12T16:00:00Z",
+            "detailed_stats": true,
+            "end_at": "2025-08-24T16:52:00Z",
+            "winner_id": 125905,
+            "winner_type": "Team",
+            "serie_id": 9581,
+            "modified_at": "2025-08-25T07:47:22Z",
+            "league_id": 4302,
+            "has_bracket": true,
+            "prizepool": "20000 Euro",
+            "region": "WEU",
+            "tier": "c",
+            "live_supported": false
+        },
+        "live": {
+            "supported": false,
+            "url": null,
+            "opens_at": null
+        },
+        "winner_id": null,
+        "draw": false,
+        "videogame_version": null,
+        "end_at": null,
+        "detailed_stats": true,
+        "number_of_games": 5,
+        "serie": {
+            "id": 9581,
+            "name": "Season Finals",
+            "year": 2025,
+            "slug": "league-of-legends-prime-league-pro-division-season-finals-2025",
+            "begin_at": "2025-08-12T16:00:00Z",
+            "end_at": "2025-08-24T16:52:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "modified_at": "2025-08-25T07:47:22Z",
+            "league_id": 4302,
+            "season": null,
+            "full_name": "Season Finals 2025"
+        },
+        "league_id": 4302,
+        "match_type": "best_of",
+        "status": "canceled",
+        "game_advantage": null,
+        "tournament_id": 17327,
+        "scheduled_at": "2025-08-12T16:00:00Z",
+        "opponents": [
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 133759,
+                    "name": "Team Orange Gaming",
+                    "location": "DE",
+                    "slug": "team-orange-gaming-league-of-legends",
+                    "modified_at": "2025-09-21T11:47:47Z",
+                    "acronym": "TOG",
+                    "image_url": "https://cdn.pandascore.co/images/team/image/133759/148px_team_orange_gaming_2025_full_allmode.png"
+                }
+            },
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 132014,
+                    "name": "Kaufland Hangry Knights",
+                    "location": "DE",
+                    "slug": "kaufland-hangry-knights",
+                    "modified_at": "2025-08-12T17:33:04Z",
+                    "acronym": "KHK",
+                    "image_url": "https://cdn.pandascore.co/images/team/image/132014/kaufland_hangry_knightslogo_square.png"
+                }
+            }
+        ],
+        "id": 1222076,
+        "name": "Lower bracket quarterfinal 1: TOG vs KHK",
+        "videogame_title": null,
+        "original_scheduled_at": "2025-08-12T16:00:00Z",
+        "begin_at": null,
+        "forfeit": false,
+        "modified_at": "2025-08-11T14:03:44Z",
+        "streams_list": [
+            {
+                "main": true,
+                "language": "de",
+                "embed_url": "https://player.twitch.tv/?channel=primeleague",
+                "official": true,
+                "raw_url": "https://www.twitch.tv/primeleague"
+            },
+            {
+                "main": false,
+                "language": "de",
+                "embed_url": null,
+                "official": false,
+                "raw_url": "https://www.youtube.com/@PrimeLeague/streams"
+            }
+        ],
+        "rescheduled": false,
+        "videogame": {
+            "id": 1,
+            "name": "LoL",
+            "slug": "league-of-legends"
+        },
+        "winner_type": "Team",
+        "serie_id": 9581,
+        "league": {
+            "id": 4302,
+            "name": "Prime League 1st Division",
+            "url": "https://www.primeleague.gg/de/start",
+            "slug": "league-of-legends-prime-league-pro-division",
+            "modified_at": "2023-12-26T22:31:16Z",
+            "image_url": "https://cdn.pandascore.co/images/league/image/4302/440px-prime_league_lightmode-png"
+        },
+        "winner": null,
+        "results": [
+            {
+                "score": 0,
+                "team_id": 133759
+            },
+            {
+                "score": 0,
+                "team_id": 132014
+            }
+        ]
+    },
+    {
+        "games": [
+            {
+                "complete": false,
+                "id": 271345,
+                "position": 1,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1215906,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            }
+        ],
+        "slug": "2025-08-07-54bed163-b7be-402f-bdda-d053eb047f16",
+        "tournament": {
+            "id": 17258,
+            "name": "Group Stage",
+            "type": "online",
+            "country": "PT",
+            "slug": "league-of-legends-lplol-2025-regular-season",
+            "begin_at": "2025-08-06T18:00:00Z",
+            "detailed_stats": true,
+            "end_at": "2025-08-31T19:33:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "serie_id": 9543,
+            "modified_at": "2025-09-01T06:44:41Z",
+            "league_id": 4407,
+            "has_bracket": false,
+            "prizepool": null,
+            "region": "WEU",
+            "tier": "d",
+            "live_supported": false
+        },
+        "live": {
+            "supported": false,
+            "url": null,
+            "opens_at": null
+        },
+        "winner_id": 133305,
+        "draw": false,
+        "videogame_version": null,
+        "end_at": null,
+        "detailed_stats": true,
+        "number_of_games": 1,
+        "serie": {
+            "id": 9543,
+            "name": "",
+            "year": 2025,
+            "slug": "league-of-legends-lplol-2025",
+            "begin_at": "2025-08-06T18:00:00Z",
+            "end_at": "2025-09-13T00:00:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "modified_at": "2025-07-26T12:44:56Z",
+            "league_id": 4407,
+            "season": "Summer",
+            "full_name": "Summer 2025"
+        },
+        "league_id": 4407,
+        "match_type": "best_of",
+        "status": "canceled",
+        "game_advantage": null,
+        "tournament_id": 17258,
+        "scheduled_at": "2025-08-07T19:00:00Z",
+        "opponents": [
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 133305,
+                    "name": "Keypulse Esports",
+                    "location": "PT",
+                    "slug": "keypulse-esports",
+                    "modified_at": "2025-09-01T06:22:02Z",
+                    "acronym": "KYP",
+                    "image_url": "https://cdn.pandascore.co/images/team/image/133305/keypulse_esportslogo_square.png"
+                }
+            },
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 136450,
+                    "name": "Grow uP eSports",
+                    "location": "PT",
+                    "slug": "grow-up-esports-league-of-legends",
+                    "modified_at": "2025-09-01T10:39:13Z",
+                    "acronym": "GUP",
+                    "image_url": "https://cdn.pandascore.co/images/team/image/136450/grow_u_p_e_sportslogo_square.png"
+                }
+            }
+        ],
+        "id": 1215906,
+        "name": "Round 1: KYP vs GUP",
+        "videogame_title": null,
+        "original_scheduled_at": "2025-08-07T19:00:00Z",
+        "begin_at": null,
+        "forfeit": true,
+        "modified_at": "2025-08-07T19:13:36Z",
+        "streams_list": [
+            {
+                "main": true,
+                "language": "pt",
+                "embed_url": "https://player.twitch.tv/?channel=rtparenalol",
+                "official": true,
+                "raw_url": "https://www.twitch.tv/rtparenalol"
+            }
+        ],
+        "rescheduled": false,
+        "videogame": {
+            "id": 1,
+            "name": "LoL",
+            "slug": "league-of-legends"
+        },
+        "winner_type": "Team",
+        "serie_id": 9543,
+        "league": {
+            "id": 4407,
+            "name": "LPLOL",
+            "url": "https://lplol.pt/",
+            "slug": "league-of-legends-lplol",
+            "modified_at": "2023-12-26T22:22:01Z",
+            "image_url": "https://cdn.pandascore.co/images/league/image/4407/696px-lplol-full-logo2021-png"
+        },
+        "winner": {
+            "id": 133305,
+            "name": "Keypulse Esports",
+            "location": "PT",
+            "slug": "keypulse-esports",
+            "modified_at": "2025-09-01T06:22:02Z",
+            "acronym": "KYP",
+            "image_url": "https://cdn.pandascore.co/images/team/image/133305/keypulse_esportslogo_square.png"
+        },
+        "results": [
+            {
+                "score": 0,
+                "team_id": 133305
+            },
+            {
+                "score": 0,
+                "team_id": 136450
+            }
+        ]
+    },
+    {
+        "games": [
+            {
+                "complete": false,
+                "id": 271303,
+                "position": 1,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1215888,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271304,
+                "position": 2,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1215888,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271305,
+                "position": 3,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1215888,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271311,
+                "position": 4,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1215888,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            },
+            {
+                "complete": false,
+                "id": 271312,
+                "position": 5,
+                "status": "not_started",
+                "length": null,
+                "finished": false,
+                "match_id": 1215888,
+                "begin_at": null,
+                "detailed_stats": true,
+                "end_at": null,
+                "forfeit": false,
+                "winner_type": "Team",
+                "winner": {
+                    "id": null,
+                    "type": "Team"
+                }
+            }
+        ],
+        "slug": "anc-legends-vs-gmblers-esports-2025-08-01",
+        "tournament": {
+            "id": 17257,
+            "name": "Playoffs",
+            "type": "online",
+            "country": "IT",
+            "slug": "league-of-legends-lit-summer-2025-playoffs",
+            "begin_at": "2025-07-30T16:00:00Z",
+            "detailed_stats": true,
+            "end_at": "2025-09-14T18:43:00Z",
+            "winner_id": 136336,
+            "winner_type": "Team",
+            "serie_id": 9492,
+            "modified_at": "2025-09-16T06:46:13Z",
+            "league_id": 5211,
+            "has_bracket": true,
+            "prizepool": null,
+            "region": "WEU",
+            "tier": "c",
+            "live_supported": false
+        },
+        "live": {
+            "supported": false,
+            "url": null,
+            "opens_at": null
+        },
+        "winner_id": null,
+        "draw": false,
+        "videogame_version": null,
+        "end_at": null,
+        "detailed_stats": true,
+        "number_of_games": 5,
+        "serie": {
+            "id": 9492,
+            "name": "",
+            "year": 2025,
+            "slug": "league-of-legends-lit-summer-2025",
+            "begin_at": "2025-07-14T16:00:00Z",
+            "end_at": "2025-09-14T18:43:00Z",
+            "winner_id": null,
+            "winner_type": "Team",
+            "modified_at": "2025-09-16T06:46:13Z",
+            "league_id": 5211,
+            "season": "Summer",
+            "full_name": "Summer 2025"
+        },
+        "league_id": 5211,
+        "match_type": "best_of",
+        "status": "canceled",
+        "game_advantage": null,
+        "tournament_id": 17257,
+        "scheduled_at": "2025-08-01T16:00:00Z",
+        "opponents": [
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 136252,
+                    "name": "GMBLERS ESPORTS",
+                    "location": "IT",
+                    "slug": "gmblers-esports",
+                    "modified_at": "2025-10-05T16:33:13Z",
+                    "acronym": "GMB",
+                    "image_url": "https://cdn.pandascore.co/images/team/image/136252/gmblers_esport_slogo_square.png"
+                }
+            },
+            {
+                "type": "Team",
+                "opponent": {
+                    "id": 136739,
+                    "name": "aNc Legends",
+                    "location": "IT",
+                    "slug": "anc-legends",
+                    "modified_at": "2025-09-21T10:39:36Z",
+                    "acronym": "ANC",
+                    "image_url": "https://cdn.pandascore.co/images/team/image/136739/a_nc_legendslogo_square.png"
+                }
+            }
+        ],
+        "id": 1215888,
+        "name": "Upper bracket semifinal 2: GMB vs ANC",
+        "videogame_title": null,
+        "original_scheduled_at": "2025-08-01T16:00:00Z",
+        "begin_at": null,
+        "forfeit": false,
+        "modified_at": "2025-07-31T14:43:20Z",
+        "streams_list": [
+            {
+                "main": true,
+                "language": "it",
+                "embed_url": "https://player.twitch.tv/?channel=LITofficial",
+                "official": true,
+                "raw_url": "https://www.twitch.tv/LITofficial"
+            }
+        ],
+        "rescheduled": false,
+        "videogame": {
+            "id": 1,
+            "name": "LoL",
+            "slug": "league-of-legends"
+        },
+        "winner_type": "Team",
+        "serie_id": 9492,
+        "league": {
+            "id": 5211,
+            "name": "LIT",
+            "url": null,
+            "slug": "league-of-legends-lit",
+            "modified_at": "2024-01-03T16:28:56Z",
+            "image_url": "https://cdn.pandascore.co/images/league/image/5211/lit_2024_logo-png"
+        },
+        "winner": null,
+        "results": [
+            {
+                "score": 0,
+                "team_id": 136252
+            },
+            {
+                "score": 0,
+                "team_id": 136739
+            }
+        ]
+    }
+]

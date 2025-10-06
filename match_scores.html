@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esports Match Scores - League of Legends</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>League Match Results</h1>
+            <p>League of Legends Tournament Results & Upcoming Matches</p>
+            <nav>
+                <a href="#matches">Matches</a>
+                <a href="#tournaments">Tournaments</a>
+                <a href="#statistics">Statistics</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="total-matches">0</div>
+                    <div class="stat-label">Total Matches</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completed-matches">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="upcoming-matches">0</div>
+                    <div class="stat-label">Upcoming</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="cancelled-matches">0</div>
+                    <div class="stat-label">Cancelled</div>
+                </div>
+            </div>
+
+            <section id="matches" class="table-container">
+                <h2>📊 Match Results</h2>
+                <div class="loading" id="loading">Loading match data...</div>
+                <div class="error" id="error"></div>
+                <table id="matches-table">
+                    <thead>
+                        <tr>
+                            <th>Match</th>
+                            <th>Tournament</th>
+                            <th>Teams</th>
+                            <th>Status</th>
+                            <th>Scheduled</th>
+                            <th>Result</th>
+                            <th>Streams</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matches-body">
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="tournaments" class="assignments-grid">
+                <h2>🏆 Tournament Overview</h2>
+            </section>
+
+            <section id="statistics" class="project-stats">
+                <h2>📈 League Statistics</h2>
+                <div class="stats-grid" id="league-stats">
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Data provided by PandaScore API</p>
+        </footer>
+    </div>
+
+    <script>
+        // Load match data from JSON file
+        let matchData = [];
+
+        // Fetch data from match_scores.json
+        async function loadMatchData() {
+            try {
+                const response = await fetch('match_scores.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                matchData = await response.json();
+                init();
+            } catch (error) {
+                console.error('Error loading match data:', error);
+                document.getElementById('error').innerHTML = `
+                    <strong>Error loading match data:</strong><br>
+                    ${error.message}<br><br>
+                    Please ensure match_scores.json is in the same directory as this HTML file.
+                `;
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        // Initialize the page
+        function init() {
+            renderMatches();
+            renderTournaments();
+            renderStatistics();
+            updateStats();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const totalMatches = matchData.length;
+            const completedMatches = matchData.filter(match => match.status === 'finished').length;
+            const upcomingMatches = matchData.filter(match => match.status === 'not_started' || match.status === 'running').length;
+            const cancelledMatches = matchData.filter(match => match.status === 'canceled').length;
+
+            document.getElementById('total-matches').textContent = totalMatches;
+            document.getElementById('completed-matches').textContent = completedMatches;
+            document.getElementById('upcoming-matches').textContent = upcomingMatches;
+            document.getElementById('cancelled-matches').textContent = cancelledMatches;
+        }
+
+        // Render matches table
+        function renderMatches() {
+            const tbody = document.getElementById('matches-body');
+            tbody.innerHTML = '';
+
+            matchData.forEach(match => {
+                const row = document.createElement('tr');
+
+                // Format teams
+                const teams = match.opponents.map(opp =>
+                    `<div class="team-info">
+                        <img src="${opp.opponent.image_url}" alt="${opp.opponent.name}" class="team-logo" onerror="this.style.display='none'">
+                        <span class="team-name">${opp.opponent.acronym || opp.opponent.name}</span>
+                    </div>`
+                ).join(' vs ');
+
+                // Format status
+                let statusClass = '';
+                if (match.status === 'finished') statusClass = 'difficulty-beginner';
+                else if (match.status === 'running') statusClass = 'difficulty-intermediate';
+                else if (match.status === 'canceled') statusClass = 'difficulty-advanced';
+
+                // Format scheduled date
+                const scheduledDate = new Date(match.scheduled_at).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                // Format result
+                const result = match.results ?
+                    match.results.map(r => {
+                        const team = match.opponents.find(opp => opp.opponent.id === r.team_id);
+                        return `${team ? team.opponent.acronym : 'TBD'}: ${r.score}`;
+                    }).join(' - ') :
+                    'TBD';
+
+                // Format streams
+                const streams = match.streams_list && match.streams_list.length > 0 ?
+                    match.streams_list.map(stream =>
+                        `<a href="${stream.raw_url}" target="_blank" class="stream-link">${stream.language.toUpperCase()}</a>`
+                    ).join(', ') :
+                    'No streams';
+
+                row.innerHTML = `
+                    <td>${match.name}</td>
+                    <td>${match.league.name}</td>
+                    <td>${teams}</td>
+                    <td><span class="${statusClass}">${match.status.replace('_', ' ').toUpperCase()}</span></td>
+                    <td>${scheduledDate}</td>
+                    <td>${result}</td>
+                    <td>${streams}</td>
+                `;
+
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Render tournaments section
+        function renderTournaments() {
+            const tournamentsSection = document.getElementById('tournaments');
+
+            // Group matches by tournament
+            const tournaments = {};
+            matchData.forEach(match => {
+                const tournamentKey = match.tournament.id;
+                if (!tournaments[tournamentKey]) {
+                    tournaments[tournamentKey] = {
+                        ...match.tournament,
+                        matches: []
+                    };
+                }
+                tournaments[tournamentKey].matches.push(match);
+            });
+
+            tournamentsSection.innerHTML = '<h2>🏆 Tournament Overview</h2>';
+
+            Object.values(tournaments).forEach(tournament => {
+                const tournamentCard = document.createElement('div');
+                tournamentCard.className = 'assignment-card';
+
+                const matchCount = tournament.matches.length;
+                const completedCount = tournament.matches.filter(m => m.status === 'finished').length;
+
+                tournamentCard.innerHTML = `
+                    <h3>${tournament.name}</h3>
+                    <p><strong>League:</strong> ${tournament.league_id ? 'League of Legends' : 'Unknown'}</p>
+                    <p><strong>Region:</strong> ${tournament.region} | <strong>Tier:</strong> ${tournament.tier.toUpperCase()}</p>
+                    <p><strong>Prize Pool:</strong> ${tournament.prizepool || 'TBD'}</p>
+                    <p><strong>Matches:</strong> ${completedCount}/${matchCount} completed</p>
+                    <p><strong>Date Range:</strong> ${new Date(tournament.begin_at).toLocaleDateString()} - ${new Date(tournament.end_at).toLocaleDateString()}</p>
+                `;
+
+                tournamentsSection.appendChild(tournamentCard);
+            });
+        }
+
+        // Render statistics section
+        function renderStatistics() {
+            const statsSection = document.getElementById('league-stats');
+
+            // Calculate league statistics
+            const leagues = {};
+            matchData.forEach(match => {
+                const leagueId = match.league.id;
+                if (!leagues[leagueId]) {
+                    leagues[leagueId] = {
+                        ...match.league,
+                        matches: [],
+                        teams: new Set()
+                    };
+                }
+                leagues[leagueId].matches.push(match);
+                match.opponents.forEach(opp => {
+                    leagues[leagueId].teams.add(opp.opponent.id);
+                });
+            });
+
+            Object.values(leagues).forEach(league => {
+                const statCard = document.createElement('div');
+                statCard.className = 'stat-card';
+
+                statCard.innerHTML = `
+                    <div class="stat-number">${league.matches.length}</div>
+                    <div class="stat-label">${league.name} Matches</div>
+                    <div class="stat-number">${league.teams.size}</div>
+                    <div class="stat-label">Teams</div>
+                `;
+
+                statsSection.appendChild(statCard);
+            });
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', loadMatchData);
+    </script>
+
+    <style>
+        /* Additional styles for the match scores page */
+        .team-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .team-logo {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .team-name {
+            font-weight: 500;
+        }
+
+        .stream-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .stream-link:hover {
+            text-decoration: underline;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .status-finished {
+            background: var(--success-bg);
+            color: var(--success-text);
+        }
+
+        .status-running {
+            background: var(--warning-bg);
+            color: var(--warning-text);
+        }
+
+        .status-canceled {
+            background: var(--danger-bg);
+            color: var(--danger-text);
+        }
+    </style>
+</body>
+</html>
