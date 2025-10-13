@@ -200,6 +200,9 @@ class CardGame {
 
             this.updateGameStatus();
 
+            // Show alert for card discard
+            alert('Card Discarded');
+
             // Trigger custom discard event
             const discardEvent = new CustomEvent('cardDiscarded', {
                 detail: { cardId: cardId }
