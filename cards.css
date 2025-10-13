@@ -1,0 +1,360 @@
+/* Card Game Styles for Assignment 8 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Game Container */
+.game-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Game Header */
+.game-header {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.game-header h1 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.game-status {
+    display: flex;
+    gap: 20px;
+    font-size: 1.1em;
+}
+
+.game-status span {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* Game Layout */
+.game-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+    padding: 30px;
+    min-height: 600px;
+}
+
+.game-area {
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.game-area h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+    text-align: center;
+    border-bottom: 2px solid rgba(44, 62, 80, 0.1);
+    padding-bottom: 10px;
+}
+
+/* Deck Area */
+.deck-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.deck-container {
+    perspective: 1000px;
+    margin-top: 20px;
+}
+
+.card-back {
+    width: 167px;
+    height: 243px;
+    background: linear-gradient(135deg, #c0392b, #8e44ad);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4em;
+    color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.card-back:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Playing Field */
+.playing-field {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+
+/* Discard Area */
+.discard-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.discard-pile {
+    min-height: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    border: 2px dashed transparent;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.discard-area.drag-over {
+    background: rgba(76, 175, 80, 0.1);
+    transform: scale(1.02);
+}
+
+.discard-area.drag-over .discard-pile {
+    border-color: #4CAF50;
+    background: rgba(76, 175, 80, 0.05);
+}
+
+/* Card Styles */
+.card {
+    width: 167px;
+    height: 243px;
+    background: white;
+    border: 2px solid #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: grab;
+    transition: all 0.3s ease;
+    position: relative;
+    user-select: none;
+}
+
+.card:hover {
+    transform: translateY(-10px) rotate(2deg);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.card.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg) scale(1.1);
+    cursor: grabbing;
+    z-index: 1000;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.card-front {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* Card Dealing Animation */
+@keyframes dealCard {
+    0% {
+        transform: translateX(-200px) scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(50px) scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.card.dealing {
+    animation: dealCard 0.6s ease-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .game-layout {
+        grid-template-columns: 1fr 1.5fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-layout {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .game-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .game-status {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .playing-field {
+        gap: 10px;
+    }
+
+    .card {
+        width: 120px;
+        height: 174px;
+    }
+
+    .card-back {
+        width: 120px;
+        height: 174px;
+        font-size: 3em;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .game-header {
+        padding: 15px;
+    }
+
+    .game-header h1 {
+        font-size: 2em;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .card {
+        width: 100px;
+        height: 145px;
+    }
+
+    .card-back {
+        width: 100px;
+        height: 145px;
+        font-size: 2.5em;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .card,
+    .card-back,
+    .btn,
+    .discard-area {
+        transition: none;
+    }
+
+    .card.dealing {
+        animation: none;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+.card:focus,
+.btn:focus,
+.deck-container:focus {
+    outline: 3px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .card {
+        border-width: 3px;
+    }
+
+    .game-area {
+        border-width: 3px;
+    }
+}
