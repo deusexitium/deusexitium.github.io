@@ -14,11 +14,13 @@ class CardDeck {
 
         suits.forEach(suit => {
             values.forEach(value => {
+                // Face cards (jack, queen, king) use "2" suffix in filename
+                const fileSuffix = (value === 'jack' || value === 'queen' || value === 'king') ? '2' : '';
                 cards.push({
                     value: value,
                     suit: suit,
                     id: `${value}_of_${suit}`,
-                    svgPath: `cards/${value}_of_${suit}.svg`
+                    svgPath: `cards/${value}_of_${suit}${fileSuffix}.svg`
                 });
             });
         });
