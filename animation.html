@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation - Bouncing Ball</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Bouncing Ball Animation</h1>
+            <p>Assignment 9</p>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="assignments.html">Assignments</a>
+            </nav>
+        </div>
+
+        <main>
+            <div class="canvas-container">
+                <div class="canvas-controls">
+                    <h2>Animation Controls</h2>
+
+                    <div class="control-row">
+                        <div class="control-group">
+                            <label for="speedX">X Speed:</label>
+                            <input type="range" id="speedX" min="1" max="10" value="3" step="0.5">
+                            <span id="speedXValue">3</span>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="speedY">Y Speed:</label>
+                            <input type="range" id="speedY" min="1" max="10" value="2" step="0.5">
+                            <span id="speedYValue">2</span>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="ballSize">Ball Size:</label>
+                            <input type="range" id="ballSize" min="10" max="50" value="20" step="5">
+                            <span id="ballSizeValue">20</span>
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <div class="control-group">
+                            <label for="ballColor">Ball Color:</label>
+                            <input type="color" id="ballColor" value="#667eea">
+                        </div>
+
+                        <div class="control-group">
+                            <button id="startBtn" class="submit-btn">Start Animation</button>
+                        </div>
+
+                        <div class="control-group">
+                            <button id="resetBtn" class="submit-btn">Reset</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <p><strong>Instructions:</strong> Click on the canvas to explode the ball and create a new one with random properties!</p>
+                    </div>
+
+                    <div class="control-group">
+                        <div id="statusInfo">
+                            <p>Position: <span id="positionInfo">X: 0, Y: 0</span></p>
+                            <p>Velocity: <span id="velocityInfo">X: 0, Y: 0</span></p>
+                            <p>Status: <span id="animationStatus">Stopped</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="canvas-display">
+                    <canvas id="animationCanvas" width="800" height="600">
+                        Your browser does not support the HTML5 canvas element.
+                    </canvas>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Created by Carlton_Cooper</p>
+        </footer>
+    </div>
+
+    <script>
+        class BouncingBall {
+            constructor() {
+                // Canvas setup
+                this.canvas = document.getElementById('animationCanvas');
+                this.ctx = this.canvas.getContext('2d');
+
+                // Ball properties
+                this.x = this.canvas.width / 2;
+                this.y = this.canvas.height / 2;
+                this.radius = 20;
+                this.color = '#667eea';
+                this.velocityX = 3;
+                this.velocityY = 2;
+
+                // Animation state
+                this.isAnimating = false;
+                this.animationId = null;
+
+                // Trail effect
+                this.trail = [];
+                this.maxTrailLength = 20;
+
+                // Particle system for explosions
+                this.particles = [];
+
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.updateControlValues();
+                this.draw();
+            }
+
+            setupEventListeners() {
+                // Control buttons
+                document.getElementById('startBtn').addEventListener('click', () => {
+                    if (this.isAnimating) {
+                        this.stopAnimation();
+                    } else {
+                        this.startAnimation();
+                    }
+                });
+
+                document.getElementById('resetBtn').addEventListener('click', () => {
+                    this.reset();
+                });
+
+                // Speed controls
+                document.getElementById('speedX').addEventListener('input', (e) => {
+                    this.velocityX = parseFloat(e.target.value);
+                    document.getElementById('speedXValue').textContent = e.target.value;
+                    this.updateVelocityInfo();
+                });
+
+                document.getElementById('speedY').addEventListener('input', (e) => {
+                    this.velocityY = parseFloat(e.target.value);
+                    document.getElementById('speedYValue').textContent = e.target.value;
+                    this.updateVelocityInfo();
+                });
+
+                // Ball size control
+                document.getElementById('ballSize').addEventListener('input', (e) => {
+                    this.radius = parseInt(e.target.value);
+                    document.getElementById('ballSizeValue').textContent = e.target.value;
+                    if (!this.isAnimating) {
+                        this.draw();
+                    }
+                });
+
+                // Color control
+                document.getElementById('ballColor').addEventListener('input', (e) => {
+                    this.color = e.target.value;
+                    if (!this.isAnimating) {
+                        this.draw();
+                    }
+                });
+
+                // Canvas click event
+                this.canvas.addEventListener('click', (e) => {
+                    this.handleCanvasClick(e);
+                });
+            }
+
+            handleCanvasClick(e) {
+                // Get click position relative to canvas
+                const rect = this.canvas.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const clickY = e.clientY - rect.top;
+
+                // Create explosion at current ball position
+                this.createExplosion(this.x, this.y);
+
+                // Generate new ball with random properties
+                this.generateNewBall();
+
+                // Create a visual effect at click position
+                this.createClickEffect(clickX, clickY);
+
+                this.updateVelocityInfo();
+            }
+
+            createExplosion(x, y) {
+                // Create particle explosion
+                const particleCount = 30;
+                const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6ab04c', '#c44569', '#786fa6', '#f8b500'];
+
+                for (let i = 0; i < particleCount; i++) {
+                    const angle = (Math.PI * 2 * i) / particleCount;
+                    const speed = Math.random() * 5 + 2;
+                    const size = Math.random() * 4 + 2;
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+
+                    this.particles.push({
+                        x: x,
+                        y: y,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        size: size,
+                        color: color,
+                        alpha: 1,
+                        life: 1
+                    });
+                }
+            }
+
+            createClickEffect(x, y) {
+                // Create a temporary visual effect at click position
+                const effectRadius = 30;
+                const effectAlpha = 0.5;
+
+                this.ctx.save();
+                this.ctx.globalAlpha = effectAlpha;
+                this.ctx.strokeStyle = this.color;
+                this.ctx.lineWidth = 3;
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, effectRadius, 0, Math.PI * 2);
+                this.ctx.stroke();
+                this.ctx.restore();
+            }
+
+            generateNewBall() {
+                // Generate new ball with random properties
+                const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#f0932b', '#eb4d4b', '#6ab04c', '#c44569', '#786fa6', '#f8b500'];
+
+                // Random position (avoiding edges)
+                this.x = Math.random() * (this.canvas.width - 100) + 50;
+                this.y = Math.random() * (this.canvas.height - 100) + 50;
+
+                // Random color
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                document.getElementById('ballColor').value = this.color;
+
+                // Random velocity
+                this.velocityX = (Math.random() * 6 + 1) * (Math.random() > 0.5 ? 1 : -1);
+                this.velocityY = (Math.random() * 6 + 1) * (Math.random() > 0.5 ? 1 : -1);
+
+                // Random size
+                this.radius = Math.random() * 20 + 15;
+
+                // Update UI controls
+                document.getElementById('speedX').value = Math.abs(this.velocityX);
+                document.getElementById('speedY').value = Math.abs(this.velocityY);
+                document.getElementById('ballSize').value = this.radius;
+                document.getElementById('speedXValue').textContent = Math.abs(this.velocityX).toFixed(1);
+                document.getElementById('speedYValue').textContent = Math.abs(this.velocityY).toFixed(1);
+                document.getElementById('ballSizeValue').textContent = Math.round(this.radius);
+
+                // Clear trail for new ball
+                this.trail = [];
+            }
+
+            startAnimation() {
+                if (this.isAnimating) return;
+
+                this.isAnimating = true;
+                document.getElementById('startBtn').textContent = 'Stop Animation';
+                document.getElementById('animationStatus').textContent = 'Running';
+                this.animate();
+            }
+
+            stopAnimation() {
+                this.isAnimating = false;
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                    this.animationId = null;
+                }
+                document.getElementById('startBtn').textContent = 'Start Animation';
+                document.getElementById('animationStatus').textContent = 'Stopped';
+            }
+
+            reset() {
+                this.stopAnimation();
+                this.x = this.canvas.width / 2;
+                this.y = this.canvas.height / 2;
+                this.velocityX = 3;
+                this.velocityY = 2;
+                this.color = '#667eea';
+                this.trail = [];
+                this.particles = [];
+
+                // Reset controls
+                document.getElementById('speedX').value = 3;
+                document.getElementById('speedY').value = 2;
+                document.getElementById('ballSize').value = 20;
+                document.getElementById('ballColor').value = '#667eea';
+                this.updateControlValues();
+
+                this.draw();
+                this.updatePositionInfo();
+                this.updateVelocityInfo();
+            }
+
+            updateControlValues() {
+                document.getElementById('speedXValue').textContent = this.velocityX;
+                document.getElementById('speedYValue').textContent = this.velocityY;
+                document.getElementById('ballSizeValue').textContent = this.radius;
+            }
+
+            updatePositionInfo() {
+                document.getElementById('positionInfo').textContent = `X: ${Math.round(this.x)}, Y: ${Math.round(this.y)}`;
+            }
+
+            updateVelocityInfo() {
+                document.getElementById('velocityInfo').textContent = `X: ${this.velocityX.toFixed(1)}, Y: ${this.velocityY.toFixed(1)}`;
+            }
+
+            animate() {
+                if (!this.isAnimating) return;
+
+                // Clear canvas
+                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+                // Update position
+                this.x += this.velocityX;
+                this.y += this.velocityY;
+
+                // Collision detection with walls
+                if (this.x + this.radius > this.canvas.width || this.x - this.radius < 0) {
+                    this.velocityX = -this.velocityX;
+                    // Keep ball within bounds
+                    if (this.x + this.radius > this.canvas.width) {
+                        this.x = this.canvas.width - this.radius;
+                    } else if (this.x - this.radius < 0) {
+                        this.x = this.radius;
+                    }
+                }
+
+                if (this.y + this.radius > this.canvas.height || this.y - this.radius < 0) {
+                    this.velocityY = -this.velocityY;
+                    // Keep ball within bounds
+                    if (this.y + this.radius > this.canvas.height) {
+                        this.y = this.canvas.height - this.radius;
+                    } else if (this.y - this.radius < 0) {
+                        this.y = this.radius;
+                    }
+                }
+
+                // Update particles
+                this.updateParticles();
+
+                // Add to trail
+                this.trail.push({ x: this.x, y: this.y, color: this.color });
+                if (this.trail.length > this.maxTrailLength) {
+                    this.trail.shift();
+                }
+
+                // Draw trail
+                this.drawTrail();
+
+                // Draw particles
+                this.drawParticles();
+
+                // Draw ball
+                this.drawBall();
+
+                // Update info
+                this.updatePositionInfo();
+
+                // Continue animation
+                this.animationId = requestAnimationFrame(() => this.animate());
+            }
+
+            updateParticles() {
+                for (let i = this.particles.length - 1; i >= 0; i--) {
+                    const particle = this.particles[i];
+
+                    // Update position
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+
+                    // Apply gravity
+                    particle.vy += 0.2;
+
+                    // Apply friction
+                    particle.vx *= 0.98;
+                    particle.vy *= 0.98;
+
+                    // Update life
+                    particle.life -= 0.02;
+                    particle.alpha = particle.life;
+
+                    // Remove dead particles
+                    if (particle.life <= 0) {
+                        this.particles.splice(i, 1);
+                    }
+                }
+            }
+
+            drawParticles() {
+                this.particles.forEach(particle => {
+                    this.ctx.save();
+                    this.ctx.globalAlpha = particle.alpha;
+                    this.ctx.fillStyle = particle.color;
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.restore();
+                });
+            }
+
+            drawTrail() {
+                this.trail.forEach((point, index) => {
+                    const alpha = (index / this.trail.length) * 0.5;
+                    const trailRadius = this.radius * (index / this.trail.length) * 0.8;
+
+                    this.ctx.save();
+                    this.ctx.globalAlpha = alpha;
+                    this.ctx.fillStyle = point.color;
+                    this.ctx.beginPath();
+                    this.ctx.arc(point.x, point.y, trailRadius, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.restore();
+                });
+            }
+
+            drawBall() {
+                // Draw shadow
+                this.ctx.save();
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+                this.ctx.beginPath();
+                this.ctx.ellipse(this.x + 3, this.y + 3, this.radius * 0.8, this.radius * 0.6, 0, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.restore();
+
+                // Draw ball with gradient
+                const gradient = this.ctx.createRadialGradient(
+                    this.x - this.radius/3,
+                    this.y - this.radius/3,
+                    0,
+                    this.x,
+                    this.y,
+                    this.radius
+                );
+                gradient.addColorStop(0, this.lightenColor(this.color, 40));
+                gradient.addColorStop(0.7, this.color);
+                gradient.addColorStop(1, this.darkenColor(this.color, 20));
+
+                this.ctx.fillStyle = gradient;
+                this.ctx.beginPath();
+                this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                this.ctx.fill();
+
+                // Draw highlight
+                this.ctx.save();
+                this.ctx.globalAlpha = 0.6;
+                this.ctx.fillStyle = 'white';
+                this.ctx.beginPath();
+                this.ctx.ellipse(this.x - this.radius/3, this.y - this.radius/3, this.radius/3, this.radius/4, -Math.PI/4, 0, Math.PI * 2);
+                this.ctx.fill();
+                this.ctx.restore();
+            }
+
+            draw() {
+                // Clear canvas
+                this.ctx.fillStyle = '#f9f9f9';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+                // Draw grid
+                this.drawGrid();
+
+                // Draw ball
+                this.drawBall();
+            }
+
+            drawGrid() {
+                this.ctx.strokeStyle = '#e0e0e0';
+                this.ctx.lineWidth = 1;
+
+                // Vertical lines
+                for (let x = 0; x <= this.canvas.width; x += 50) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x, 0);
+                    this.ctx.lineTo(x, this.canvas.height);
+                    this.ctx.stroke();
+                }
+
+                // Horizontal lines
+                for (let y = 0; y <= this.canvas.height; y += 50) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(0, y);
+                    this.ctx.lineTo(this.canvas.width, y);
+                    this.ctx.stroke();
+                }
+            }
+
+            lightenColor(color, percent) {
+                const num = parseInt(color.replace("#", ""), 16);
+                const amt = Math.round(2.55 * percent);
+                const R = (num >> 16) + amt;
+                const G = (num >> 8 & 0x00FF) + amt;
+                const B = (num & 0x0000FF) + amt;
+                return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+                    (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+                    (B < 255 ? B < 1 ? 0 : B : 255))
+                    .toString(16).slice(1);
+            }
+
+            darkenColor(color, percent) {
+                const num = parseInt(color.replace("#", ""), 16);
+                const amt = Math.round(2.55 * percent);
+                const R = (num >> 16) - amt;
+                const G = (num >> 8 & 0x00FF) - amt;
+                const B = (num & 0x0000FF) - amt;
+                return "#" + (0x1000000 + (R > 0 ? R : 0) * 0x10000 +
+                    (G > 0 ? G : 0) * 0x100 +
+                    (B > 0 ? B : 0))
+                    .toString(16).slice(1);
+            }
+        }
+
+        // Initialize animation when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const bouncingBall = new BouncingBall();
+            console.log('Bouncing ball animation loaded and ready.');
+        });
+    </script>
+</body>
+</html>
