@@ -3,15 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Web Systems 1 Website</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('mobile-menu-toggle');
+            const mainNav = document.getElementById('main-nav');
+
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', function() {
+                    mainNav.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                });
+
+                // Close menu when clicking on a link
+                const navLinks = mainNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mainNav.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    });
+                });
+            }
+        });
+    </script>
     <div class="container">
         <div class="header">
             <h1>Web Systems 1</h1>
             <p></p>
-            <nav>
+            <div class="menu-toggle" id="mobile-menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <nav id="main-nav">
                 <a href="index.html">Home</a>
                 <a href="about.html">About This Site</a>
             </nav>
@@ -19,10 +49,18 @@
 
         <main>
             <h2>Welcome to My Web Systems 1 Webpage</h2>
-            <img src="https://i.ibb.co/rGyRTJmq/photo-1756520009349-7f1d073af472.jpg" alt="Web development illustration">
+            <img src="https://i.ibb.co/rGyRTJmq/photo-1756520009349-7f1d073af472.jpg" alt="Web development illustration" loading="lazy">
             <p>
             </p>
         </main>
+
+        <section class="location-section">
+            <h2>Chrome Lighthouse report</h2>>
+            <img src="https://i.ibb.co/j9BYwt9y/chrome-c-Ck-CUqj-OZ1.png" alt="Lighthouse Performance Report" loading="lazy">
+            <img src="https://i.ibb.co/60jcFKwB/chrome-Cue-CBW8h3-D.png" alt="Lighthouse Accessibility Report" loading="lazy">
+            <img src="https://i.ibb.co/b5dLQj4n/chrome-r-JRa-Qq-Db-RC.png" alt="Lighthouse Best Practices Report" loading="lazy">
+            <img src="https://i.ibb.co/wNKTCqtK/chrome-v-MKm-JRYHOa.png" alt="Lighthouse SEO Report" loading="lazy">
+        </section>
 
         <footer>
             <p>Created by Carlton_Cooper</p>
