@@ -1,0 +1,278 @@
+{
+  "program": {
+    "name": "Computer Programming and Analysis (Software Engineering Technology)",
+    "code": "204700",
+    "catalogYear": "2025-2026",
+    "totalCredits": 60,
+    "description": "Plan courses for the Daytona State College Computer Programming and Analysis A.S. degree with prerequisite-aware guidance."
+  },
+  "metaNotes": [
+    "General education requirements total 15 credits spanning communication, math, science, humanities, and social sciences.",
+    "Students must complete either COP2800 or COP2360 to satisfy the object-oriented programming requirement.",
+    "Follow recommended sequencing to ensure prerequisites are satisfied before upper-level coursework."
+  ],
+  "exclusiveGroups": [
+    {
+      "id": "oopChoice",
+      "title": "Object-Oriented Programming Choice",
+      "description": "Complete either COP2800 (Java) or COP2360 (C#). Completing one locks the other."
+    }
+  ],
+  "categories": [
+    { "id": "gen-ed", "name": "General Education" },
+    { "id": "program-core", "name": "Program Core" },
+    { "id": "technical-elective", "name": "Technical Electives" }
+  ],
+  "courses": [
+    {
+      "code": "ENC1101",
+      "title": "Introduction to Composition",
+      "credits": 3,
+      "category": "gen-ed",
+      "subcategory": "Communication",
+      "prerequisites": [],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Recommended first semester general education requirement."]
+    },
+    {
+      "code": "MAC1105",
+      "title": "College Algebra",
+      "credits": 3,
+      "category": "gen-ed",
+      "subcategory": "Mathematics",
+      "prerequisites": [],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Recommended math pathway for BSIT transfer articulation."]
+    },
+    {
+      "code": "AST1002",
+      "title": "Astronomy for Non-Science Majors",
+      "credits": 3,
+      "category": "gen-ed",
+      "subcategory": "Natural Science",
+      "prerequisites": [],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Select one natural science elective to fulfill the requirement."]
+    },
+    {
+      "code": "HUM2020",
+      "title": "Introduction to Humanities",
+      "credits": 3,
+      "category": "gen-ed",
+      "subcategory": "Humanities",
+      "prerequisites": [],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Choose one humanities core course; HUM2020 is a popular option."]
+    },
+    {
+      "code": "POS2041",
+      "title": "American Federal Government",
+      "credits": 3,
+      "category": "gen-ed",
+      "subcategory": "Social Science",
+      "prerequisites": [],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Satisfies the Civic Literacy competency graduation requirement."]
+    },
+    {
+      "code": "COP1000",
+      "title": "Introduction to Programming Logic",
+      "credits": 3,
+      "category": "program-core",
+      "subcategory": "Programming Foundations",
+      "prerequisites": [],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Start here before any other programming course."]
+    },
+    {
+      "code": "CTS1851",
+      "title": "Web Foundations and Standards",
+      "credits": 3,
+      "category": "program-core",
+      "subcategory": "Web Technologies",
+      "prerequisites": [],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Covers HTML, CSS, and accessibility fundamentals."]
+    },
+    {
+      "code": "CET1600",
+      "title": "Network Fundamentals",
+      "credits": 3,
+      "category": "program-core",
+      "subcategory": "Infrastructure",
+      "prerequisites": [],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Provides foundational networking knowledge for later security courses."]
+    },
+    {
+      "code": "CET2154",
+      "title": "Digital Systems and Microprocessors",
+      "credits": 4,
+      "category": "program-core",
+      "subcategory": "Hardware",
+      "prerequisites": [
+        { "type": "all", "courses": ["CET1600"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Plan for a lab-intensive course focusing on digital logic."]
+    },
+    {
+      "code": "COP2800",
+      "title": "Object-Oriented Programming in Java",
+      "credits": 3,
+      "category": "program-core",
+      "subcategory": "Programming",
+      "prerequisites": [
+        { "type": "all", "courses": ["COP1000"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": "oopChoice",
+      "notes": [
+        "Choose either COP2800 or COP2360; completing one locks the other.",
+        "Focuses on Java syntax, OOP patterns, and GUI basics."
+      ]
+    },
+    {
+      "code": "COP2360",
+      "title": "C# Programming",
+      "credits": 3,
+      "category": "program-core",
+      "subcategory": "Programming",
+      "prerequisites": [
+        { "type": "all", "courses": ["COP1000"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Prepares you for the .NET advanced programming sequence."]
+    },
+    {
+      "code": "COP2700",
+      "title": "Database Design and SQL",
+      "credits": 3,
+      "category": "program-core",
+      "subcategory": "Data Management",
+      "prerequisites": [
+        { "type": "all", "courses": ["COP1000"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Required before advanced software and analytics courses."]
+    },
+    {
+      "code": "CTS2375",
+      "title": "Cybersecurity Fundamentals",
+      "credits": 3,
+      "category": "program-core",
+      "subcategory": "Security",
+      "prerequisites": [
+        { "type": "all", "courses": ["CET1600"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Explores security principles, risk management, and controls."]
+    },
+    {
+      "code": "CAI2010",
+      "title": "Applied Artificial Intelligence",
+      "credits": 3,
+      "category": "program-core",
+      "subcategory": "Advanced Topics",
+      "prerequisites": [
+        { "type": "any", "courses": ["COP2800", "COP2360"], "detail": "Object-oriented programming requirement." },
+        { "type": "all", "courses": ["COP2700"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Builds machine learning prototypes with Python and SQL."],
+      "info": "Requires comfort with object-oriented programming concepts."
+    },
+    {
+      "code": "CEN2002",
+      "title": "Software Engineering Processes",
+      "credits": 3,
+      "category": "program-core",
+      "subcategory": "Software Engineering",
+      "prerequisites": [
+        { "type": "any", "courses": ["COP2800", "COP2360"], "detail": "Object-oriented programming requirement." },
+        { "type": "all", "courses": ["COP2700"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Covers SDLC, agile practices, and project documentation."]
+    },
+    {
+      "code": "COP2072",
+      "title": "Advanced .NET Programming",
+      "credits": 3,
+      "category": "program-core",
+      "subcategory": "Programming",
+      "prerequisites": [
+        { "type": "all", "courses": ["COP2360"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Implements enterprise solutions using C# and ASP.NET MVC."]
+    },
+    {
+      "code": "COP2949",
+      "title": "Cooperative Education Internship",
+      "credits": 2,
+      "category": "program-core",
+      "subcategory": "Experiential Learning",
+      "prerequisites": [
+        { "type": "all", "courses": ["COP1000", "CTS1851"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Coordinate with Career Services prior to enrolling."]
+    },
+    {
+      "code": "CTS2321",
+      "title": "Linux System Administration",
+      "credits": 3,
+      "category": "technical-elective",
+      "subcategory": "Systems",
+      "prerequisites": [
+        { "type": "all", "courses": ["CET1600"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Popular elective for cybersecurity or DevOps focus."]
+    },
+    {
+      "code": "CAP2741",
+      "title": "Data Mining and Analytics",
+      "credits": 4,
+      "category": "technical-elective",
+      "subcategory": "Data Science",
+      "prerequisites": [
+        { "type": "all", "courses": ["CAI2010", "COP2700"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Capstone-style elective emphasizing predictive analytics projects."]
+    },
+    {
+      "code": "CAI1320",
+      "title": "Python for Analytics",
+      "credits": 3,
+      "category": "technical-elective",
+      "subcategory": "Programming",
+      "prerequisites": [
+        { "type": "all", "courses": ["COP1000"] }
+      ],
+      "corequisites": [],
+      "exclusiveGroup": null,
+      "notes": ["Ideal preparation for AI and data mining electives."]
+    }
+  ]
+}

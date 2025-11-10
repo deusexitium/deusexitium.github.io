@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Advisor | Plan Your Degree Path</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+        }
+
+        .advising-hero {
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.95), rgba(52, 73, 94, 0.95));
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advising-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .advising-hero__content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .advising-hero h1 {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .advising-hero__subtitle {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .advising-hero__description {
+            font-size: 1.05em;
+            opacity: 0.85;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .feature-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .feature-badge {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-badge:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .feature-badge::before {
+            content: '✓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: rgba(76, 175, 80, 0.8);
+            border-radius: 50%;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .advising-hero {
+                padding: 40px 20px;
+            }
+
+            .advising-hero h1 {
+                font-size: 2em;
+            }
+
+            .advising-hero__subtitle {
+                font-size: 1.1em;
+            }
+
+            .advising-hero__description {
+                font-size: 0.95em;
+            }
+
+            .feature-badges {
+                gap: 10px;
+            }
+
+            .feature-badge {
+                font-size: 0.85em;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="advising-hero">
+            <div class="advising-hero__content">
+                <h1>🎓 Academic Advisor</h1>
+                <p class="advising-hero__subtitle">Smart Course Planning for Your Degree Journey</p>
+                <p class="advising-hero__description">
+                    Navigate your Computer Programming &amp; Analysis (Software Engineering Technology) A.S. degree with intelligent prerequisite tracking, personalized recommendations, and real-time progress monitoring.
+                </p>
+                <div class="feature-badges">
+                    <span class="feature-badge">Prerequisite Tracking</span>
+                    <span class="feature-badge">Smart Recommendations</span>
+                    <span class="feature-badge">Progress Analytics</span>
+                </div>
+            </div>
+        </header>
+        <main id="advisor-app"></main>
+    </div>
+    <script src="advisor.js" type="module"></script>
+</body>
+</html>
