@@ -1,0 +1,114 @@
+{
+  "cms": [
+    {
+      "name": "WordPress",
+      "support": "Open Source, Supported by most hosting companies",
+      "technology": "PHP/MySQL",
+      "capabilities": [
+        "Supports themes",
+        "Supports plugins",
+        "Public API",
+        "Large community support",
+        "SEO friendly"
+      ],
+      "limitations": [
+        "Security vulnerabilities from plugins",
+        "Frequent updates required",
+        "Performance can be slow without optimization"
+      ],
+      "examples": "https://wordpress.org/",
+      "sources": {
+        "name": "WordPress Official Site",
+        "url": "https://wordpress.org/"
+      }
+    },
+    {
+      "name": "Drupal",
+      "support": "Open Source",
+      "technology": "PHP/MySQL/PostgreSQL",
+      "capabilities": [
+        "Enterprise-level security",
+        "Flexible content modeling",
+        "Robust user permissions",
+        "Multilingual capabilities",
+        "API-first architecture"
+      ],
+      "limitations": [
+        "Steep learning curve",
+        "Requires technical expertise",
+        "Fewer free themes/plugins than WordPress"
+      ],
+      "examples": "https://www.whitehouse.gov/",
+      "sources": {
+        "name": "Drupal Official Site",
+        "url": "https://www.drupal.org/"
+      }
+    },
+    {
+      "name": "Joomla",
+      "support": "Open Source",
+      "technology": "PHP/MySQL",
+      "capabilities": [
+        "User management system",
+        "Multilingual support",
+        "Extension system",
+        "Built-in caching",
+        "Template management"
+      ],
+      "limitations": [
+        "Smaller community than WordPress",
+        "Fewer third-party extensions",
+        "Less frequent security updates"
+      ],
+      "examples": "https://www.ihop.com/",
+      "sources": {
+        "name": "Joomla Official Site",
+        "url": "https://www.joomla.org/"
+      }
+    },
+    {
+      "name": "Contentful",
+      "support": "Commercial SaaS",
+      "technology": "Node.js/React/Cloud-based",
+      "capabilities": [
+        "Headless CMS",
+        "API-first approach",
+        "Multi-platform content delivery",
+        "Real-time collaboration",
+        "Content modeling"
+      ],
+      "limitations": [
+        "Subscription-based pricing",
+        "Requires development resources",
+        "No built-in front-end"
+      ],
+      "examples": "https://www.spotify.com/",
+      "sources": {
+        "name": "Contentful Official Site",
+        "url": "https://www.contentful.com/"
+      }
+    },
+    {
+      "name": "Strapi",
+      "support": "Open Source",
+      "technology": "Node.js/JavaScript/MongoDB/PostgreSQL",
+      "capabilities": [
+        "Headless CMS",
+        "Self-hostable",
+        "Customizable admin panel",
+        "GraphQL and REST APIs",
+        "Plugin system"
+      ],
+      "limitations": [
+        "Requires Node.js expertise",
+        "Less mature than PHP alternatives",
+        "Setup complexity for beginners"
+      ],
+      "examples": "https://www.burgerking.com/",
+      "sources": {
+        "name": "Strapi Official Site",
+        "url": "https://strapi.io/"
+      }
+    }
+  ]
+}
